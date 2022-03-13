@@ -1,8 +1,9 @@
 <template>
-  <v-navigation-drawer expand-on-hover rail permanent>
-    <v-list nav>
+  <v-navigation-drawer rail-width="52" expand-on-hover rail permanent>
+    <v-list density="comfortable" nav>
       <v-list-item
         v-for="(item, i) in items"
+        class="px-2"
         :key="i"
         :prepend-icon="item.icon"
         :title="item.title"

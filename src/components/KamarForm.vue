@@ -1,8 +1,8 @@
 <template>
   <v-form ref="form">
     <v-container>
-      <v-row class="justify-center elevation-1">
-        <v-col cols="2">
+      <v-row class="elevation-1" justify="center">
+        <v-col cols="12" sm="2">
           <v-text-field
             v-model="name"
             label="Nama"
@@ -12,7 +12,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="6" sm="2">
           <v-text-field
             v-model="jenisKamar"
             label="Jenis Kamar (int)"
@@ -23,7 +23,7 @@
             required
           ></v-text-field>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="6" sm="2">
           <v-text-field
             v-model="maxKapasitas"
             type="number"
@@ -60,7 +60,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-2" cols="auto">
+        <v-col class="mt-2 mb-sm-0 mb-3" cols="auto">
           <v-btn color="primary" variant="outlined" @click="sumbit">
             <v-icon>mdi-send</v-icon> Sumbit
           </v-btn>
