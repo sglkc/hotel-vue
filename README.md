@@ -1,4 +1,4 @@
-# vote
+# Hotel
 
 ## Project setup
 ```
