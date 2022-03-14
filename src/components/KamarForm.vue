@@ -80,7 +80,7 @@ export default {
       name: "",
       jenisKamar: "",
       maxKapasitas: 1,
-      inventory: [],
+      inventory: [""],
       maxInventory: 10,
       required: (v) => !!v || "Required",
     };
@@ -91,12 +91,11 @@ export default {
       this.inventory.push("");
     },
     removeInventory() {
-      if (this.inventory.length - 1 < 0) return;
+      if (this.inventory.length - 1 < 1) return;
       this.inventory.pop();
     },
     async sumbit() {
       const validation = await this.$refs.form.validate();
-
       if (!validation.valid) return;
 
       const body = {
@@ -107,8 +106,11 @@ export default {
       };
 
       axios
-        .post("http://103.166.156.163/services/kamar", body)
-        .then(console.log)
+        .post(import.meta.env.VITE_API + "/services/kamar", body)
+        .then((res) => {
+          console.log(res);
+          this.emitter.emit("getKamar");
+        })
         .catch(console.error);
     },
   },

@@ -3,7 +3,10 @@ import App from "./App.vue";
 import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
+import mitt from "./mitt";
 
+const app = createApp(App);
+
+app.config.globalProperties.emitter = mitt;
 loadFonts();
-
-createApp(App).use(router).use(vuetify).mount("#app");
+app.use(router).use(vuetify).mount("#app");

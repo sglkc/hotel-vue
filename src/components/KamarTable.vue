@@ -42,13 +42,15 @@ export default {
       rooms: false,
     };
   },
-  async mounted() {
-    try {
-      const res = await axios.get("http://103.166.156.163/services/kamar");
+  methods: {
+    async getKamar() {
+      const res = await axios.get(import.meta.env.VITE_API + "/services/kamar");
       this.rooms = res.data.result;
-    } catch (error) {
-      console.error(error);
-    }
+    },
+  },
+  async mounted() {
+    this.emitter.on("getKamar", this.getKamar);
+    this.getKamar();
   },
 };
 </script>
