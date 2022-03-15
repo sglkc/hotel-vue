@@ -17,6 +17,7 @@
     "vue": "^3.2.13",
     "vue-router": "^4.0.3",
     "vuetify": "^3.0.0-alpha.0",
+    "vuex": "^4.0.0",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
@@ -26,6 +27,7 @@
     "@vue/cli-plugin-babel": "~5.0.0",
     "@vue/cli-plugin-eslint": "~5.0.0",
     "@vue/cli-plugin-router": "^5.0.1",
+    "@vue/cli-plugin-vuex": "^5.0.1",
     "@vue/cli-service": "~5.0.0",
     "@vuetify/vite-plugin": "^1.0.0-alpha.0",
     "eslint": "^7.32.0",

@@ -49,6 +49,7 @@ export default {
     },
   },
   async mounted() {
+    console.log(this.store);
     this.emitter.on("getKamar", this.getKamar);
     this.getKamar();
   },

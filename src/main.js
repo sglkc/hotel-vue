@@ -4,9 +4,11 @@ import vuetify from "./plugins/vuetify";
 import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
 import mitt from "./mitt";
+import store from "./store";
 
 const app = createApp(App);
 
-app.config.globalProperties.emitter = mitt;
 loadFonts();
-app.use(router).use(vuetify).mount("#app");
+app.config.globalProperties.emitter = mitt;
+app.config.globalProperties.store = store;
+app.use(router).use(store).use(vuetify).mount("#app");
