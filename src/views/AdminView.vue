@@ -1,7 +1,23 @@
 <template>
-  <LoginForm />
-  <KamarTable />
-  <KamarForm class="mt-3" />
+  <v-container v-if="loggedIn">
+    <v-row elevation="12">
+      <v-col class="elevation-1 mb-6">
+        <KamarTable />
+      </v-col>
+    </v-row>
+    <v-row class="elevation-1">
+      <v-col>
+        <KamarForm class="mt-3" />
+      </v-col>
+    </v-row>
+  </v-container>
+  <v-container v-else class="mt-10">
+    <v-row justify="center">
+      <v-col cols="10" md="5" sm="8">
+        <LoginForm />
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 
 <script>
@@ -16,6 +32,19 @@ export default {
     KamarTable,
     KamarForm,
     LoginForm,
+  },
+  data() {
+    return {
+      loggedIn: !!this.store.state.JWT_TOKEN,
+    };
+  },
+  methods: {
+    refreshLoggedIn() {
+      this.loggedIn = !!this.store.state.JWT_TOKEN;
+    },
+  },
+  async mounted() {
+    this.emitter.on("tryLogin", this.refreshLoggedIn);
   },
 };
 </script>

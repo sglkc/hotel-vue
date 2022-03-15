@@ -1,7 +1,7 @@
 <template>
   <v-form ref="form">
     <v-container>
-      <v-row class="elevation-1" justify="center">
+      <v-row justify="center">
         <v-col cols="12" md="2">
           <v-text-field
             v-model="name"
@@ -61,7 +61,12 @@
           ></v-text-field>
         </v-col>
         <v-col class="mt-2 mb-sm-0 mb-3" cols="auto">
-          <v-btn color="primary" variant="outlined" @click="sumbit">
+          <v-btn
+            color="primary"
+            type="submit"
+            variant="outlined"
+            @click="sumbit"
+          >
             <v-icon>mdi-send</v-icon> Sumbit
           </v-btn>
         </v-col>
