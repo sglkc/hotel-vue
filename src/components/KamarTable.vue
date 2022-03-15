@@ -25,7 +25,9 @@
       </tbody>
       <tbody v-else>
         <tr>
-          <td class="text-center font-weight-bold" colspan="7">Loading data</td>
+          <td class="text-center font-weight-bold" colspan="7">
+            <v-icon class="mdi-spin" size="">mdi-loading</v-icon> Loading data
+          </td>
         </tr>
       </tbody>
     </template>
@@ -44,12 +46,21 @@ export default {
   },
   methods: {
     async getKamar() {
-      const res = await axios.get(import.meta.env.VITE_API + "/services/kamar");
+      if (!this.store.state.JWT_TOKEN) return console.error("Not logged in");
+
+      const config = {
+        headers: {
+          Authorization: "Bearer " + this.store.state.JWT_TOKEN,
+        },
+      };
+      const res = await axios.get(
+        import.meta.env.VITE_API + "/services/kamar",
+        config
+      );
       this.rooms = res.data.result;
     },
   },
   async mounted() {
-    console.log(this.store);
     this.emitter.on("getKamar", this.getKamar);
     this.getKamar();
   },

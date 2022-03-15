@@ -1,19 +1,26 @@
 import { createStore } from "vuex";
+import VuexPersist from "vuex-persist";
+
+const vuexPersist = new VuexPersist({
+  key: "hotel",
+  storage: window.localStorage,
+});
 
 export default createStore({
   state: {
-    count: 0,
+    JWT_TOKEN: 0,
+    USER: {},
   },
   getters: {},
   mutations: {
-    incrementCount(state, amount) {
-      state.count += amount;
+    setJWT(state, token) {
+      state.JWT_TOKEN = token;
+    },
+    setUser(state, user) {
+      state.USER = user;
     },
   },
-  actions: {
-    incrementCount({ commit }) {
-      commit("incrementCount");
-    },
-  },
+  actions: {},
   modules: {},
+  plugins: [vuexPersist.plugin],
 });

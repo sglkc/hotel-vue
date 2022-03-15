@@ -2,7 +2,7 @@
   <v-form ref="form">
     <v-container>
       <v-row class="elevation-1" justify="center">
-        <v-col cols="12" sm="2">
+        <v-col cols="12" md="2">
           <v-text-field
             v-model="name"
             label="Nama"
@@ -12,10 +12,10 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="6" sm="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="jenisKamar"
-            label="Jenis Kamar (int)"
+            label="Jenis Kamar"
             prepend-icon="mdi-bed-king"
             variant="underlined"
             :rules="[required]"
@@ -23,7 +23,7 @@
             required
           ></v-text-field>
         </v-col>
-        <v-col cols="6" sm="2">
+        <v-col cols="6" md="2">
           <v-text-field
             v-model="maxKapasitas"
             type="number"
@@ -107,8 +107,7 @@ export default {
 
       axios
         .post(import.meta.env.VITE_API + "/services/kamar", body)
-        .then((res) => {
-          console.log(res);
+        .then(() => {
           this.emitter.emit("getKamar");
         })
         .catch(console.error);
