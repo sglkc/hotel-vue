@@ -11,10 +11,10 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-container v-else class="mt-10">
-    <v-row justify="center">
-      <v-col cols="10" md="5" sm="8">
-        <LoginForm />
+  <v-container v-else style="height: 100%" fluid>
+    <v-row style="height: 100%" align="center" justify="center">
+      <v-col cols="10" md="4" sm="8">
+        <AuthForm />
       </v-col>
     </v-row>
   </v-container>
@@ -24,14 +24,14 @@
 // @ is an alias to /src
 import KamarTable from "@/components/KamarTable.vue";
 import KamarForm from "@/components/KamarForm.vue";
-import LoginForm from "@/components/LoginForm.vue";
+import AuthForm from "@/components/AuthForm.vue";
 
 export default {
   name: "AdminView",
   components: {
     KamarTable,
     KamarForm,
-    LoginForm,
+    AuthForm,
   },
   data() {
     return {
@@ -44,7 +44,7 @@ export default {
     },
   },
   async mounted() {
-    this.emitter.on("tryLogin", this.refreshLoggedIn);
+    this.emitter.on("refreshAdminView", this.refreshLoggedIn);
   },
 };
 </script>
