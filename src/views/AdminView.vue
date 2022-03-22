@@ -35,12 +35,12 @@ export default {
   },
   data() {
     return {
-      loggedIn: !!this.store.state.JWT_TOKEN,
+      loggedIn: this.store.state.JWT.expire > Date.now(),
     };
   },
   methods: {
     refreshLoggedIn() {
-      this.loggedIn = !!this.store.state.JWT_TOKEN;
+      this.loggedIn = this.store.state.JWT.expire > Date.now();
     },
   },
   async mounted() {

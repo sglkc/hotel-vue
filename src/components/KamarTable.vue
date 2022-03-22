@@ -46,17 +46,7 @@ export default {
   },
   methods: {
     async getKamar() {
-      if (!this.store.state.JWT_TOKEN) return console.error("Not logged in");
-
-      const config = {
-        headers: {
-          Authorization: "Bearer " + this.store.state.JWT_TOKEN,
-        },
-      };
-      const res = await axios.get(
-        import.meta.env.VITE_API + "/services/kamar",
-        config
-      );
+      const res = await axios.get(import.meta.env.VITE_API + "/services/kamar");
       this.rooms = res.data.result;
     },
   },

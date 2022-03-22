@@ -8,13 +8,16 @@ const vuexPersist = new VuexPersist({
 
 export default createStore({
   state: {
-    JWT_TOKEN: 0,
+    JWT: {},
     USER: {},
   },
   getters: {},
   mutations: {
-    setJWT(state, token) {
-      state.JWT_TOKEN = token;
+    setJWT(state, object) {
+      state.JWT = {
+        token: object.token,
+        expire: object.timestamp + (2*60*60*1000) // 2h expire
+      };
     },
     setUser(state, user) {
       state.USER = user;

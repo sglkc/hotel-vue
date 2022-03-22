@@ -137,7 +137,8 @@ export default {
     },
     async register() {
       const validation = await this.$refs.form.validate();
-      if (!validation.valid) return;
+      if (!validation.valid) return (this.fail = "Masukkan data dengan benar");
+      if (!this.roleId) return (this.fail = "Pilih role akun");
 
       const body = {
         full_name: this.name,
@@ -149,8 +150,8 @@ export default {
       axios
         .post(import.meta.env.VITE_API + "/auth/register", body)
         .then((res) => {
-          console.log(res);
-          this.fail = "Email sudah terdaftar";
+          this.fail = res.data.status ? false : "Email sudah terdaftar";
+          this.registerForm = false;
         })
         .catch(() => {
           this.fail = "Registration failed";
@@ -168,7 +169,10 @@ export default {
       axios
         .post(import.meta.env.VITE_API + "/auth/login", body)
         .then((res) => {
-          this.store.commit("setJWT", res.data.data.token);
+          this.store.commit("setJWT", {
+            token: res.data.data.token,
+            timestamp: Date.now(),
+          });
           this.store.commit("setUser", res.data.data.user);
           this.emitter.emit("getKamar");
           this.emitter.emit("refreshAdminView");
