@@ -13,7 +13,7 @@
   </v-container>
   <v-container v-else style="height: 100%" fluid>
     <v-row style="height: 100%" align="center" justify="center">
-      <v-col cols="10" md="4" sm="8">
+      <v-col cols="auto" md="5" lg="4">
         <AuthForm />
       </v-col>
     </v-row>

@@ -137,14 +137,6 @@ export default {
     };
   },
   methods: {
-    async getRoles() {
-      axios
-        .get(import.meta.env.VITE_API + "/auth/roles")
-        .then((res) => {
-          this.roles = res.data.result;
-        })
-        .catch(console.error);
-    },
     async register() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return (this.fail = "Please complete the form");
@@ -160,6 +152,7 @@ export default {
       axios
         .post(import.meta.env.VITE_API + "/auth/register", body)
         .then(() => {
+          this.fail = false;
           this.registerForm = false;
         })
         .catch((err) => {
@@ -192,7 +185,12 @@ export default {
     },
   },
   async mounted() {
-    this.getRoles();
+    axios
+      .get(import.meta.env.VITE_API + "/auth/roles")
+      .then((res) => {
+        this.roles = res.data.result;
+      })
+      .catch(console.error);
   },
 };
 </script>

@@ -2,7 +2,7 @@
   <v-form ref="form">
     <v-container>
       <v-row justify="center">
-        <v-col cols="12" sm="6">
+        <v-col cols="7" md="5">
           <v-text-field
             v-model="name"
             label="Name"
@@ -12,18 +12,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="6" sm="6" md="3">
-          <v-text-field
-            v-model="roomType"
-            label="Room Type"
-            prepend-icon="mdi-bed-king"
-            variant="underlined"
-            :rules="[required]"
-            hide-details
-            required
-          ></v-text-field>
-        </v-col>
-        <v-col cols="6" sm="3">
+        <v-col cols="5" md="2">
           <v-text-field
             v-model="capacity"
             type="number"
@@ -33,15 +22,28 @@
             variant="underlined"
             :rules="[required]"
             hide-details
-            required
           ></v-text-field>
         </v-col>
-        <v-col class="mt-2 mb-sm-0 mb-3" cols="auto">
+        <v-col class="mt-3" cols="8" md="auto">
+          <div :style="'color: ' + (roomType ? '#00000099' : '#b00020')">
+            <v-icon>mdi-bed-king</v-icon>
+            <span class="ms-3">Room Type</span>
+          </div>
+          <v-radio-group class="mt-1" v-model="roomType" hide-details mandatory>
+            <v-radio
+              v-for="type in roomTypes"
+              :key="type.id"
+              :label="`${type.name} (Rp.${type.price})`"
+              :value="type.id"
+            ></v-radio>
+          </v-radio-group>
+        </v-col>
+        <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
           <v-btn
             color="primary"
             type="submit"
             variant="outlined"
-            @click="sumbit"
+            @click="submit"
           >
             <v-icon>mdi-send</v-icon> Submit
           </v-btn>
@@ -60,14 +62,21 @@ export default {
     return {
       name: "",
       roomType: "",
+      roomTypes: false,
       capacity: 1,
       required: (v) => !!v || "Required",
     };
   },
+  computed: {
+    anu() {
+      return this.roomTypes;
+    },
+  },
   methods: {
-    async sumbit() {
+    async submit() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return;
+      if (!this.roomType) return;
 
       const body = {
         name: this.name,
@@ -82,6 +91,14 @@ export default {
         })
         .catch(console.error);
     },
+  },
+  async mounted() {
+    axios
+      .get(import.meta.env.VITE_API + "/services/room-types")
+      .then((res) => {
+        this.roomTypes = res.data.result;
+      })
+      .catch(console.error);
   },
 };
 </script>
