@@ -22,7 +22,7 @@ export default {
       rail: true,
       items: [
         { title: "Admin", icon: "mdi-account", link: "/" },
-        { title: "Kamar", icon: "mdi-bed-king", link: "/about" },
+        { title: "Rooms", icon: "mdi-bed-king", link: "/about" },
       ],
     };
   },

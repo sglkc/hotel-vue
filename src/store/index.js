@@ -16,7 +16,7 @@ export default createStore({
     setJWT(state, object) {
       state.JWT = {
         token: object.token,
-        expire: object.timestamp + (2*60*60*1000) // 2h expire
+        expire: object.timestamp + 2 * 60 * 60 * 1000, // 2h expire
       };
     },
     setUser(state, user) {

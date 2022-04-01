@@ -23,6 +23,7 @@
               <v-col>
                 <v-item-group
                   v-model="roleId"
+                  v-if="roles"
                   selected-class="bg-primary"
                   :rules="[rules.required]"
                   mandatory
@@ -34,11 +35,20 @@
                     :value="role.id"
                     :key="role.id"
                   >
-                    <v-chip size="large" :class="selectedClass" @click="toggle">
+                    <v-chip
+                      class="me-1"
+                      size="large"
+                      :class="selectedClass"
+                      @click="toggle"
+                    >
                       {{ role.name }}
                     </v-chip>
                   </v-item>
                 </v-item-group>
+                <div v-else>
+                  <v-icon color="red">mdi-exclamation-thick</v-icon>
+                  <span class="text-red">Unable to get roles</span>
+                </div>
               </v-col>
             </v-row>
           </div>
@@ -123,7 +133,7 @@ export default {
       },
       fail: false,
       registerForm: false,
-      roles: [],
+      roles: false,
     };
   },
   methods: {
@@ -137,29 +147,28 @@ export default {
     },
     async register() {
       const validation = await this.$refs.form.validate();
-      if (!validation.valid) return (this.fail = "Masukkan data dengan benar");
-      if (!this.roleId) return (this.fail = "Pilih role akun");
+      if (!validation.valid) return (this.fail = "Please complete the form");
+      if (!this.roleId) return (this.fail = "Select a role for the account");
 
       const body = {
         full_name: this.name,
         email: this.email,
         password: this.password,
-        role: this.role,
+        role: this.roleId,
       };
 
       axios
         .post(import.meta.env.VITE_API + "/auth/register", body)
-        .then((res) => {
-          this.fail = res.data.status ? false : "Email sudah terdaftar";
+        .then(() => {
           this.registerForm = false;
         })
-        .catch(() => {
-          this.fail = "Registration failed";
+        .catch((err) => {
+          this.fail = err.response.data.error;
         });
     },
     async login() {
       const validation = await this.$refs.form.validate();
-      if (!validation.valid) return;
+      if (!validation.valid) return (this.fail = "Please complete the form");
 
       const body = {
         email: this.email,
@@ -170,15 +179,15 @@ export default {
         .post(import.meta.env.VITE_API + "/auth/login", body)
         .then((res) => {
           this.store.commit("setJWT", {
-            token: res.data.data.token,
+            token: res.data.result.token,
             timestamp: Date.now(),
           });
-          this.store.commit("setUser", res.data.data.user);
-          this.emitter.emit("getKamar");
+          this.store.commit("setUser", res.data.result.user);
+          this.emitter.emit("getRooms");
           this.emitter.emit("refreshAdminView");
         })
-        .catch(() => {
-          this.fail = "Wrong password";
+        .catch((err) => {
+          this.fail = err.response.data.error;
         });
     },
   },
