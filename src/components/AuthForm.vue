@@ -156,7 +156,7 @@ export default {
           this.registerForm = false;
         })
         .catch((err) => {
-          this.fail = err.response.data.error;
+          this.fail = err.response?.data?.error ?? err;
         });
     },
     async login() {
@@ -180,7 +180,7 @@ export default {
           this.emitter.emit("refreshAdminView");
         })
         .catch((err) => {
-          this.fail = err.response.data.error;
+          this.fail = err.response?.data?.error ?? err;
         });
     },
   },

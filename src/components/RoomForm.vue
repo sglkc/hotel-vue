@@ -29,7 +29,13 @@
             <v-icon>mdi-bed-king</v-icon>
             <span class="ms-3">Room Type</span>
           </div>
-          <v-radio-group class="mt-1" v-model="roomType" hide-details mandatory>
+          <v-radio-group
+            v-if="roomType.length"
+            v-model="roomType"
+            class="mt-1"
+            hide-details
+            mandatory
+          >
             <v-radio
               v-for="type in roomTypes"
               :key="type.id"
@@ -37,6 +43,10 @@
               :value="type.id"
             ></v-radio>
           </v-radio-group>
+          <div v-else class="mt-3">
+            <v-icon color="red">mdi-exclamation-thick</v-icon>
+            <span class="text-red">Room type is empty</span>
+          </div>
         </v-col>
         <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
           <v-btn
@@ -62,15 +72,10 @@ export default {
     return {
       name: "",
       roomType: "",
-      roomTypes: false,
+      roomTypes: [],
       capacity: 1,
       required: (v) => !!v || "Required",
     };
-  },
-  computed: {
-    anu() {
-      return this.roomTypes;
-    },
   },
   methods: {
     async submit() {
