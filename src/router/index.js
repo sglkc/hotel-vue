@@ -6,7 +6,7 @@ import store from "../store";
 function verify(next) {
   axios
     .post(import.meta.env.VITE_API + "/auth/verify", {
-      token: store.state.JWT.token,
+      token: store.state.JWT_TOKEN,
     })
     .then(() => {
       next();

@@ -7,11 +7,13 @@
       </v-col>
     </v-row>
     <v-row>
-      <v-col>
-        <v-card>
-          <v-card-title>abc</v-card-title>
-          <v-card-text>ROle: {{ store.state.USER.role_name }}</v-card-text>
-        </v-card>
+      <v-col class="elevation-1">
+        <h1 class="pa-3">Welcome, {{ store.state.USER.full_name }}</h1>
+        <v-list density="compact">
+          <v-list-item>Email: {{ store.state.USER.email }}</v-list-item>
+          <v-list-item>Role: {{ store.state.USER.role_name }}</v-list-item>
+          <v-list-item>Use the navigation bar to get started</v-list-item>
+        </v-list>
       </v-col>
     </v-row>
   </v-container>
@@ -53,7 +55,7 @@ export default {
     this.emitter.on("refreshAdminView", this.refreshLoggedIn);
     axios
       .post(import.meta.env.VITE_API + "/auth/verify", {
-        token: this.store.state.JWT.token,
+        token: this.store.state.JWT_TOKEN,
       })
       .then(() => {
         this.loggedIn = true;

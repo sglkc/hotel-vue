@@ -158,7 +158,7 @@ export default {
           this.registerForm = false;
         })
         .catch((err) => {
-          this.fail = err.response?.data?.error ?? err;
+          this.fail = err.response?.data.error ?? err;
         });
     },
     async login() {
@@ -173,27 +173,26 @@ export default {
       axios
         .post(import.meta.env.VITE_API + "/auth/login", body)
         .then((res) => {
-          this.store.commit("setJWT", {
-            token: res.data.result.token,
-            timestamp: Date.now(),
-          });
+          this.store.commit("setJWT", res.data.result.token);
           this.store.commit("setUser", res.data.result.user);
           this.emitter.emit("refreshAdminView", true);
         })
         .catch((err) => {
-          this.fail = err.response?.data?.error ?? err;
+          this.fail = err.response?.data.error ?? err;
         });
     },
   },
   async created() {
+    if (this.store.state.JWT_TOKEN) this.fail = "Token expired";
+
     axios
       .get(import.meta.env.VITE_API + "/auth/roles")
       .then((res) => {
         this.roles = res.data.result;
       })
-      .catch(console.error);
-
-    if (this.store.state.JWT.token) this.fail = "Token expired";
+      .catch((err) => {
+        console.error(err.response?.data.error ?? err);
+      });
   },
 };
 </script>

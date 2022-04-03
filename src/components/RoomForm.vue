@@ -99,7 +99,9 @@ export default {
         .then(() => {
           this.emitter.emit("getRooms");
         })
-        .catch(console.error);
+        .catch((err) => {
+          console.error(err.response?.data.error ?? err);
+        });
     },
   },
   async created() {
@@ -108,7 +110,9 @@ export default {
       .then((res) => {
         this.roomTypes = res.data.result;
       })
-      .catch(console.error);
+      .catch((err) => {
+        console.error(err.response?.data.error ?? err);
+      });
   },
 };
 </script>
