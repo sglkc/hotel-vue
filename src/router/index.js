@@ -1,5 +1,20 @@
 import { createRouter, createWebHistory } from "vue-router";
 import AdminView from "@/views/AdminView.vue";
+import axios from "axios";
+import store from "../store";
+
+function verify(next) {
+  axios
+    .post(import.meta.env.VITE_API + "/auth/verify", {
+      token: store.state.JWT.token,
+    })
+    .then(() => {
+      next();
+    })
+    .catch(() => {
+      next({ name: "admin" });
+    });
+}
 
 const routes = [
   {
@@ -8,13 +23,17 @@ const routes = [
     component: AdminView,
   },
   {
+    path: "/rooms",
+    name: "rooms",
+    component: () => import("../views/RoomsView.vue"),
+    beforeEnter: (to, from, next) => {
+      verify(next);
+    },
+  },
+  {
     path: "/about",
     name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    component: () => import("../views/AboutView.vue"),
   },
 ];
 

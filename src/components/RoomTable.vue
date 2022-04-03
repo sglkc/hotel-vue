@@ -58,7 +58,7 @@ export default {
       this.rooms = res.data.result;
     },
   },
-  async mounted() {
+  async created() {
     this.emitter.on("getRooms", this.getRooms);
     this.getRooms();
   },

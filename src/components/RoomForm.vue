@@ -102,7 +102,7 @@ export default {
         .catch(console.error);
     },
   },
-  async mounted() {
+  async created() {
     axios
       .get(import.meta.env.VITE_API + "/services/room-types")
       .then((res) => {

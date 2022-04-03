@@ -178,21 +178,22 @@ export default {
             timestamp: Date.now(),
           });
           this.store.commit("setUser", res.data.result.user);
-          this.emitter.emit("getRooms");
-          this.emitter.emit("refreshAdminView");
+          this.emitter.emit("refreshAdminView", true);
         })
         .catch((err) => {
           this.fail = err.response?.data?.error ?? err;
         });
     },
   },
-  async mounted() {
+  async created() {
     axios
       .get(import.meta.env.VITE_API + "/auth/roles")
       .then((res) => {
         this.roles = res.data.result;
       })
       .catch(console.error);
+
+    if (this.store.state.JWT.token) this.fail = "Token expired";
   },
 };
 </script>

@@ -1,13 +1,17 @@
 <template>
-  <v-container v-if="loggedIn" class="h-100">
+  <div v-if="loggedIn === null"></div>
+  <v-container v-else-if="loggedIn" class="h-100">
     <v-row class="mt-auto mb-6">
-      <v-col class="elevation-1">
-        <RoomTable />
+      <v-col>
+        <v-alert type="success">Successfully logged in</v-alert>
       </v-col>
     </v-row>
-    <v-row class="elevation-1">
+    <v-row>
       <v-col>
-        <RoomForm class="mt-3" />
+        <v-card>
+          <v-card-title>abc</v-card-title>
+          <v-card-text>ROle: {{ store.state.USER.role_name }}</v-card-text>
+        </v-card>
       </v-col>
     </v-row>
   </v-container>
@@ -27,30 +31,36 @@
 </style>
 
 <script>
-// @ is an alias to /src
-import RoomTable from "@/components/RoomTable.vue";
-import RoomForm from "@/components/RoomForm.vue";
 import AuthForm from "@/components/AuthForm.vue";
+import axios from "axios";
 
 export default {
   name: "AdminView",
   components: {
-    RoomTable,
-    RoomForm,
     AuthForm,
   },
   data() {
     return {
-      loggedIn: this.store.state.JWT.expire > Date.now(),
+      loggedIn: null,
     };
   },
   methods: {
-    refreshLoggedIn() {
-      this.loggedIn = this.store.state.JWT.expire > Date.now();
+    refreshLoggedIn(e) {
+      this.loggedIn = e;
     },
   },
-  async mounted() {
+  async created() {
     this.emitter.on("refreshAdminView", this.refreshLoggedIn);
+    axios
+      .post(import.meta.env.VITE_API + "/auth/verify", {
+        token: this.store.state.JWT.token,
+      })
+      .then(() => {
+        this.loggedIn = true;
+      })
+      .catch(() => {
+        this.loggedIn = false;
+      });
   },
 };
 </script>
