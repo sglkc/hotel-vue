@@ -12,7 +12,7 @@
           <th>Created At</th>
         </tr>
       </thead>
-      <tbody v-if="rooms">
+      <tbody v-if="rooms.length">
         <tr v-for="(room, i) in rooms" :key="i">
           <td>{{ i + 1 }}</td>
           <td>{{ room.id }}</td>
@@ -23,10 +23,18 @@
           <td>{{ new Date(room.created_at).toLocaleString() }}</td>
         </tr>
       </tbody>
+      <tbody v-else-if="rooms">
+        <tr>
+          <td class="text-center font-weight-bold" colspan="7">
+            <v-icon color="red">mdi-exclamation-thick</v-icon>
+            <span class="text-red">Room data is empty</span>
+          </td>
+        </tr>
+      </tbody>
       <tbody v-else>
         <tr>
           <td class="text-center font-weight-bold" colspan="7">
-            <v-icon class="mdi-spin" size="">mdi-loading</v-icon> Loading data
+            <v-icon class="mdi-spin">mdi-loading</v-icon> Loading room data
           </td>
         </tr>
       </tbody>

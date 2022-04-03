@@ -102,6 +102,8 @@
               {{ registerForm ? "Register" : "Login" }}
             </v-btn>
           </v-col>
+        </v-row>
+        <v-row align="center" justify="center">
           <v-expand-transition>
             <v-col v-show="fail" cols="auto">
               <v-alert density="compact" type="error">{{ fail }}</v-alert>

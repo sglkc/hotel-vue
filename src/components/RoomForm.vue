@@ -30,22 +30,27 @@
             <span class="ms-3">Room Type</span>
           </div>
           <v-radio-group
-            v-if="roomType.length"
+            v-if="roomTypes"
             v-model="roomType"
             class="mt-1"
             hide-details
             mandatory
           >
-            <v-radio
-              v-for="type in roomTypes"
-              :key="type.id"
-              :label="`${type.name} (Rp.${type.price})`"
-              :value="type.id"
-            ></v-radio>
+            <span v-if="roomTypes.length">
+              <v-radio
+                v-for="type in roomTypes"
+                :key="type.id"
+                :label="`${type.name} (Rp.${type.price})`"
+                :value="type.id"
+              ></v-radio>
+            </span>
+            <div v-else class="mt-3">
+              <v-icon color="red">mdi-exclamation-thick</v-icon>
+              <span class="text-red">Room type is empty</span>
+            </div>
           </v-radio-group>
           <div v-else class="mt-3">
-            <v-icon color="red">mdi-exclamation-thick</v-icon>
-            <span class="text-red">Room type is empty</span>
+            <v-icon class="mdi-spin">mdi-loading</v-icon> Loading room types
           </div>
         </v-col>
         <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
@@ -72,7 +77,7 @@ export default {
     return {
       name: "",
       roomType: "",
-      roomTypes: [],
+      roomTypes: false,
       capacity: 1,
       required: (v) => !!v || "Required",
     };

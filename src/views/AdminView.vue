@@ -1,7 +1,7 @@
 <template>
-  <v-container v-if="loggedIn">
-    <v-row elevation="12">
-      <v-col class="elevation-1 mb-6">
+  <v-container v-if="loggedIn" class="h-100">
+    <v-row class="mt-auto mb-6">
+      <v-col class="elevation-1">
         <RoomTable />
       </v-col>
     </v-row>
@@ -11,14 +11,20 @@
       </v-col>
     </v-row>
   </v-container>
-  <v-container v-else style="height: 100%" fluid>
-    <v-row style="height: 100%" align="center" justify="center">
+  <v-container v-else class="h-100" fluid>
+    <v-row class="h-100" align="center" justify="center">
       <v-col cols="auto" md="5" lg="4">
         <AuthForm />
       </v-col>
     </v-row>
   </v-container>
 </template>
+
+<style scoped>
+.h-100 {
+  height: 100%;
+}
+</style>
 
 <script>
 // @ is an alias to /src
