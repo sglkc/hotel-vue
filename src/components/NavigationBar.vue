@@ -7,7 +7,7 @@
         :key="i"
         :prepend-icon="item.icon"
         :title="item.title"
-        @click="this.$router.push(item.link)"
+        @click="this.$router.push({ name: item.link })"
       >
       </v-list-item>
     </v-list>
@@ -32,11 +32,11 @@ export default {
     return {
       rail: true,
       items: [
-        { title: "Admin", icon: "mdi-account", link: "/" },
-        { title: "Rooms", icon: "mdi-bed-king", link: "/rooms" },
-        { title: "Room Types", icon: "mdi-tag-multiple", link: "/rooms/types" },
-        { title: "Facilities", icon: "mdi-room-service", link: "/facilities" },
-        { title: "About", icon: "mdi-information-variant", link: "/about" },
+        { title: "Home", icon: "mdi-home", link: "home" },
+        { title: "Staff", icon: "mdi-account", link: "staff" },
+        { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },
+        { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
+        { title: "Facilities", icon: "mdi-room-service", link: "facilities" },
       ],
     };
   },

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <NavigationBar />
+    <NavigationBar v-if="isStaff" />
     <v-main style="min-height: 100vh">
       <router-view></router-view>
     </v-main>
@@ -14,6 +14,11 @@ export default {
   name: "Hotel",
   components: {
     NavigationBar,
+  },
+  computed: {
+    isStaff() {
+      return this.$router.currentRoute.value.path.includes("staff");
+    },
   },
 };
 </script>

@@ -44,7 +44,7 @@ import AuthForm from "@/components/AuthForm.vue";
 import axios from "axios";
 
 export default {
-  name: "AdminView",
+  name: "StaffView",
   components: {
     AuthForm,
   },
@@ -63,7 +63,7 @@ export default {
     },
   },
   async created() {
-    this.emitter.on("refreshAdminView", this.refreshLoggedIn);
+    this.emitter.on("refreshStaffView", this.refreshLoggedIn);
 
     if (!this.store.state.JWT_TOKEN) return (this.loggedIn = false);
 

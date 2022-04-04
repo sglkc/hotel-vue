@@ -175,7 +175,7 @@ export default {
         .then((res) => {
           this.store.commit("setJWT", res.data.result.token);
           this.store.commit("setUser", res.data.result.user);
-          this.emitter.emit("refreshAdminView", true);
+          this.emitter.emit("refreshStaffView", true);
         })
         .catch((err) => {
           this.fail = err.response?.data.error ?? err;

@@ -1,9 +1,11 @@
 import { createRouter, createWebHistory } from "vue-router";
-import AdminView from "@/views/AdminView.vue";
+import LandingView from "@/views/LandingView.vue";
 import axios from "axios";
 import store from "../store";
 
 function verify(next) {
+  console.info("Verifying token...");
+
   axios
     .post(import.meta.env.VITE_API + "/auth/verify", {
       token: store.state.JWT_TOKEN,
@@ -12,18 +14,23 @@ function verify(next) {
       next();
     })
     .catch(() => {
-      next({ name: "admin" });
+      next({ name: "staff" });
     });
 }
 
 const routes = [
   {
     path: "/",
-    name: "admin",
-    component: AdminView,
+    name: "home",
+    component: LandingView,
   },
   {
-    path: "/rooms",
+    path: "/staff",
+    name: "staff",
+    component: () => import("../views/StaffView.vue"),
+  },
+  {
+    path: "/staff/rooms",
     name: "rooms",
     component: () => import("../views/RoomsView.vue"),
     beforeEnter: (to, from, next) => {
@@ -31,25 +38,20 @@ const routes = [
     },
   },
   {
-    path: "/rooms/types",
-    name: "room-types",
+    path: "/staff/rooms/types",
+    name: "roomtypes",
     component: () => import("../views/RoomTypesView.vue"),
     beforeEnter: (to, from, next) => {
       verify(next);
     },
   },
   {
-    path: "/facilities",
+    path: "/staff/facilities",
     name: "facilities",
     component: () => import("../views/FacilitiesView.vue"),
     beforeEnter: (to, from, next) => {
       verify(next);
     },
-  },
-  {
-    path: "/about",
-    name: "about",
-    component: () => import("../views/AboutView.vue"),
   },
 ];
 
