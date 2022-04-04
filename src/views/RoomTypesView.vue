@@ -2,15 +2,15 @@
   <v-container class="h-100 my-3">
     <v-row class="mb-6">
       <v-col class="elevation-1">
-        <RoomTypeTable />
+        <Table />
       </v-col>
     </v-row>
     <v-row class="elevation-1 mt-3">
       <v-col v-if="!type">
-        <RoomTypeForm />
+        <Form />
       </v-col>
       <v-col v-else>
-        <RoomTypeUpdateForm :type="type" />
+        <UpdateForm :type="type" />
       </v-col>
     </v-row>
   </v-container>
@@ -23,16 +23,16 @@
 </style>
 
 <script>
-import RoomTypeTable from "@/components/RoomTypeTable.vue";
-import RoomTypeForm from "@/components/RoomTypeForm.vue";
-import RoomTypeUpdateForm from "@/components/RoomTypeUpdateForm.vue";
+import Table from "@/components/roomType/Table.vue";
+import Form from "@/components/roomType/Form.vue";
+import UpdateForm from "@/components/roomType/UpdateForm.vue";
 
 export default {
   name: "RoomTypesView",
   components: {
-    RoomTypeTable,
-    RoomTypeForm,
-    RoomTypeUpdateForm,
+    Table,
+    Form,
+    UpdateForm,
   },
   data() {
     return {

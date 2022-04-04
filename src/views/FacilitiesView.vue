@@ -2,15 +2,15 @@
   <v-container class="h-100 my-3">
     <v-row class="mb-6">
       <v-col class="elevation-1">
-        <FacilityTable />
+        <Table />
       </v-col>
     </v-row>
     <v-row class="elevation-1 mt-3">
       <v-col v-if="!facility">
-        <FacilityForm />
+        <Form />
       </v-col>
       <v-col v-else>
-        <FacilityUpdateForm :facility="facility" />
+        <UpdateForm :facility="facility" />
       </v-col>
     </v-row>
   </v-container>
@@ -23,16 +23,16 @@
 </style>
 
 <script>
-import FacilityTable from "@/components/FacilityTable.vue";
-import FacilityForm from "@/components/FacilityForm.vue";
-import FacilityUpdateForm from "@/components/FacilityUpdateForm.vue";
+import Table from "@/components/facility/Table.vue";
+import Form from "@/components/facility/Form.vue";
+import UpdateForm from "@/components/facility/UpdateForm.vue";
 
 export default {
   name: "FacilitiesView",
   components: {
-    FacilityTable,
-    FacilityForm,
-    FacilityUpdateForm,
+    Table,
+    Form,
+    UpdateForm,
   },
   data() {
     return {
