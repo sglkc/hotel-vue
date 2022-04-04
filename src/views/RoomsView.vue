@@ -1,6 +1,6 @@
 <template>
-  <v-container class="h-100">
-    <v-row class="mt-auto mb-6">
+  <v-container class="h-100 my-3">
+    <v-row class="mb-6">
       <v-col class="elevation-1">
         <RoomTable />
       </v-col>

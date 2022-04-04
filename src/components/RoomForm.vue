@@ -5,7 +5,7 @@
         <v-col cols="7" md="5">
           <v-text-field
             v-model="name"
-            label="Name"
+            label="Name*"
             prepend-icon="mdi-rename-box"
             variant="underlined"
             :rules="[required]"
@@ -16,7 +16,7 @@
           <v-text-field
             v-model="capacity"
             type="number"
-            label="Capacity"
+            label="Capacity*"
             min="1"
             prepend-icon="mdi-account-multiple"
             variant="underlined"
@@ -27,7 +27,7 @@
         <v-col class="mt-3" cols="8" md="auto">
           <div :style="'color: ' + (roomType ? '#00000099' : '#b00020')">
             <v-icon>mdi-bed-king</v-icon>
-            <span class="ms-3">Room Type</span>
+            <span class="ms-3">Room Type*</span>
           </div>
           <v-radio-group
             v-if="roomTypes"
@@ -60,7 +60,7 @@
             variant="outlined"
             @click="submit"
           >
-            <v-icon>mdi-send</v-icon> Submit
+            <v-icon>mdi-plus</v-icon> New
           </v-btn>
         </v-col>
       </v-row>

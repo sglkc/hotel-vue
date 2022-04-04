@@ -4,12 +4,12 @@
       <v-row>
         <v-col>
           <v-alert density="compact" type="warning" variant="contained-text">
-            Updating room {{ room.id }}
+            Updating facility {{ facility.id }}
           </v-alert>
         </v-col>
       </v-row>
       <v-row class="mt-3" justify="center">
-        <v-col cols="7" md="4">
+        <v-col cols="7" md="5">
           <v-text-field
             v-model="name"
             label="Name*"
@@ -19,25 +19,12 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="5" md="2">
+        <v-col cols="5" md="5">
           <v-text-field
-            v-model="capacity"
-            type="number"
-            label="Capacity*"
-            min="1"
-            prepend-icon="mdi-account-multiple"
+            v-model="notes"
+            label="Notes"
+            prepend-icon="mdi-note-multiple"
             variant="underlined"
-            :rules="[required]"
-            hide-details
-          ></v-text-field>
-        </v-col>
-        <v-col cols="8" md="3">
-          <v-text-field
-            label="Room Type*"
-            prepend-icon="mdi-bed-king"
-            variant="underlined"
-            :model-value="room.type_name"
-            disabled
             hide-details
           ></v-text-field>
         </v-col>
@@ -64,21 +51,21 @@
 import axios from "axios";
 
 export default {
-  name: "RoomUpdateForm",
+  name: "FacilityUpdateForm",
   props: {
-    room: Object,
+    facility: Object,
   },
   data() {
     return {
-      name: this.room.name,
-      capacity: this.room.capacity,
+      name: this.facility.name,
+      notes: this.facility.notes,
       required: (v) => !!v || "Required",
     };
   },
   methods: {
-    updateRoom(room) {
-      this.name = room.name;
-      this.capacity = room.capacity;
+    updateFacility(facility) {
+      this.name = facility.name;
+      this.notes = facility.notes;
     },
     async submit() {
       const validation = await this.$refs.form.validate();
@@ -86,10 +73,10 @@ export default {
 
       axios
         .put(
-          import.meta.env.VITE_API + "/services/rooms/" + this.room.id,
+          import.meta.env.VITE_API + "/services/facilities/" + this.facility.id,
           {
             name: this.name,
-            capacity: this.capacity,
+            notes: this.notes,
           },
           {
             headers: {
@@ -98,7 +85,7 @@ export default {
           }
         )
         .then(() => {
-          this.emitter.emit("getRooms");
+          this.emitter.emit("getFacilities");
           this.cancel();
         })
         .catch((err) => {
@@ -106,11 +93,11 @@ export default {
         });
     },
     cancel() {
-      this.emitter.emit("updateRoom", false);
+      this.emitter.emit("updateFacility", false);
     },
   },
   created() {
-    this.emitter.on("updateRoom", this.updateRoom);
+    this.emitter.on("updateFacility", this.updateFacility);
   },
 };
 </script>

@@ -31,6 +31,14 @@ const routes = [
     },
   },
   {
+    path: "/facilities",
+    name: "facilities",
+    component: () => import("../views/FacilitiesView.vue"),
+    beforeEnter: (to, from, next) => {
+      verify(next);
+    },
+  },
+  {
     path: "/about",
     name: "about",
     component: () => import("../views/AboutView.vue"),

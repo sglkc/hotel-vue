@@ -5,34 +5,28 @@
         <tr>
           <th>No</th>
           <th>ID</th>
-          <th>Room Type</th>
-          <th>Room Type ID</th>
           <th>Name</th>
-          <th>Max Capacity</th>
-          <th>Created At</th>
+          <th>Notes</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
-      <tbody v-if="rooms.length">
+      <tbody v-if="facilities.length">
         <tr
-          v-for="(room, i) in rooms"
-          :style="room.id === selected ? 'background: #EEE' : ''"
+          v-for="(facility, i) in facilities"
+          :style="facility.id === selected ? 'background: #EEE' : ''"
           :key="i"
         >
           <td>{{ i + 1 }}</td>
-          <td>{{ room.id }}</td>
-          <td>{{ room.type_name }}</td>
-          <td>{{ room.room_type }}</td>
-          <td>{{ room.name }}</td>
-          <td>{{ room.capacity }}</td>
-          <td>{{ new Date(room.created_at).toLocaleString() }}</td>
+          <td>{{ facility.id }}</td>
+          <td>{{ facility.name }}</td>
+          <td>{{ facility.notes ?? "-" }}</td>
           <td class="text-center">
             <v-btn
               class="ma-1"
               color="error"
               size="small"
               variant="contained-text"
-              @click="deleteRoom(room.id)"
+              @click="deleteFacility(facility.id)"
             >
               Delete
             </v-btn>
@@ -41,25 +35,25 @@
               color="warning"
               size="small"
               variant="contained-text"
-              @click="updateRoom(room)"
+              @click="updateFacility(facility)"
             >
               Update
             </v-btn>
           </td>
         </tr>
       </tbody>
-      <tbody v-else-if="rooms">
+      <tbody v-else-if="facilities">
         <tr>
-          <td class="text-center font-weight-bold" colspan="8">
+          <td class="text-center font-weight-bold" colspan="5">
             <v-icon color="red">mdi-exclamation-thick</v-icon>
-            <span class="text-red">Room data is empty</span>
+            <span class="text-red">Facility data is empty</span>
           </td>
         </tr>
       </tbody>
       <tbody v-else>
         <tr>
-          <td class="text-center font-weight-bold" colspan="8">
-            <v-icon class="mdi-spin">mdi-loading</v-icon> Loading room data
+          <td class="text-center font-weight-bold" colspan="5">
+            <v-icon class="mdi-spin">mdi-loading</v-icon> Loading facility data
           </td>
         </tr>
       </tbody>
@@ -71,32 +65,34 @@
 import axios from "axios";
 
 export default {
-  name: "RoomTable",
+  name: "FacilityTable",
   data() {
     return {
-      rooms: false,
+      facilities: false,
       selected: false,
     };
   },
   methods: {
-    async getRooms() {
-      const res = await axios.get(import.meta.env.VITE_API + "/services/rooms");
-      this.rooms = res.data.result;
+    async getFacilities() {
+      const res = await axios.get(
+        import.meta.env.VITE_API + "/services/facilities"
+      );
+      this.facilities = res.data.result;
     },
-    updateRoom(room) {
-      this.selected = room.id;
-      this.emitter.emit("updateRoom", room);
+    updateFacility(facility) {
+      this.selected = facility.id;
+      this.emitter.emit("updateFacility", facility);
     },
-    async deleteRoom(id) {
+    async deleteFacility(id) {
       axios
-        .delete(import.meta.env.VITE_API + "/services/rooms/" + id, {
+        .delete(import.meta.env.VITE_API + "/services/facilities/" + id, {
           headers: {
             Authorization: "bearer " + this.store.state.JWT_TOKEN,
           },
         })
         .then(() => {
-          if (this.selected === id) this.emitter.emit("updateRoom", false);
-          this.getRooms();
+          if (this.selected === id) this.emitter.emit("updateFacility", false);
+          this.getFacilities();
         })
         .catch((err) => {
           console.error(err.response?.data.error ?? err);
@@ -104,8 +100,8 @@ export default {
     },
   },
   created() {
-    this.emitter.on("getRooms", this.getRooms);
-    this.getRooms();
+    this.emitter.on("getFacilities", this.getFacilities);
+    this.getFacilities();
   },
 };
 </script>
