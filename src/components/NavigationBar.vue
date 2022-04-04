@@ -23,6 +23,7 @@ export default {
       items: [
         { title: "Admin", icon: "mdi-account", link: "/" },
         { title: "Rooms", icon: "mdi-bed-king", link: "/rooms" },
+        { title: "Room Types", icon: "mdi-tag-multiple", link: "/rooms/types" },
         { title: "Facilities", icon: "mdi-room-service", link: "/facilities" },
         { title: "About", icon: "mdi-information-variant", link: "/about" },
       ],
