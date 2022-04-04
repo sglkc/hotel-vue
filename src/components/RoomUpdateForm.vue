@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row class="mt-3" justify="center">
-        <v-col cols="7" md="4">
+        <v-col cols="7" md="6">
           <v-text-field
             v-model="name"
             label="Name*"
@@ -41,7 +41,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
+        <v-col class="mt-2 mb-sm-0 mb-3" align="center">
           <v-btn
             class="ma-1"
             color="primary"

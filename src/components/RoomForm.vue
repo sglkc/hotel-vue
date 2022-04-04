@@ -24,7 +24,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-3" cols="8" md="auto">
+        <v-col class="mt-3">
           <div :style="'color: ' + (roomType ? '#00000099' : '#b00020')">
             <v-icon>mdi-bed-king</v-icon>
             <span class="ms-3">Room Type*</span>
@@ -40,7 +40,7 @@
               <v-radio
                 v-for="type in roomTypes"
                 :key="type.id"
-                :label="`${type.name} (Rp.${type.price})`"
+                :label="type.name"
                 :value="type.id"
               ></v-radio>
             </span>
@@ -53,7 +53,7 @@
             <v-icon class="mdi-spin">mdi-loading</v-icon> Loading room types
           </div>
         </v-col>
-        <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
+        <v-col class="mt-2 mb-sm-0 mb-3" align="center">
           <v-btn
             color="primary"
             type="submit"

@@ -28,7 +28,7 @@ import RoomForm from "@/components/RoomForm.vue";
 import RoomUpdateForm from "@/components/RoomUpdateForm.vue";
 
 export default {
-  name: "RoomView",
+  name: "RoomsView",
   components: {
     RoomTable,
     RoomForm,

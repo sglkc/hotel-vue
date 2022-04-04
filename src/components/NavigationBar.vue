@@ -7,11 +7,22 @@
         :key="i"
         :prepend-icon="item.icon"
         :title="item.title"
-        :value="item.title"
         @click="this.$router.push(item.link)"
       >
       </v-list-item>
     </v-list>
+    <span v-if="store.state.USER">
+      <v-divider></v-divider>
+      <v-list density="comfortable" nav>
+        <v-list-item
+          class="px-2"
+          prepend-icon="mdi-logout"
+          title="Logout"
+          @click="logout"
+        >
+        </v-list-item>
+      </v-list>
+    </span>
   </v-navigation-drawer>
 </template>
 
@@ -32,6 +43,10 @@ export default {
   methods: {
     onClickOutside() {
       this.rail = false;
+    },
+    logout() {
+      window.localStorage.clear();
+      location.reload();
     },
   },
 };

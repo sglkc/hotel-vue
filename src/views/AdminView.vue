@@ -17,7 +17,7 @@
           </v-list-item>
           <v-list-item>
             <v-btn color="error" variant="outlined" @click="logout">
-              Logout
+              <v-icon>mdi-logout</v-icon> Logout
             </v-btn>
           </v-list-item>
         </v-list>
@@ -76,6 +76,7 @@ export default {
       })
       .catch(() => {
         this.loggedIn = false;
+        this.store.commit("setUser", false);
       });
   },
 };
