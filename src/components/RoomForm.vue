@@ -95,7 +95,11 @@ export default {
       };
 
       axios
-        .post(import.meta.env.VITE_API + "/services/rooms", body)
+        .post(import.meta.env.VITE_API + "/services/rooms", body, {
+          headers: {
+            Authorization: "bearer " + this.store.state.JWT_TOKEN,
+          },
+        })
         .then(() => {
           this.emitter.emit("getRooms");
         })

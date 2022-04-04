@@ -10,7 +10,7 @@
           <th>Name</th>
           <th>Max Capacity</th>
           <th>Created At</th>
-          <th>Action</th>
+          <th class="text-center">Action</th>
         </tr>
       </thead>
       <tbody v-if="rooms.length">
@@ -22,14 +22,24 @@
           <td>{{ room.name }}</td>
           <td>{{ room.capacity }}</td>
           <td>{{ new Date(room.created_at).toLocaleString() }}</td>
-          <td>
+          <td class="text-center">
             <v-btn
+              class="ma-1"
               color="error"
               size="small"
               variant="contained-text"
               @click="deleteRoom(room.id)"
             >
               Delete
+            </v-btn>
+            <v-btn
+              class="ma-1"
+              color="warning"
+              size="small"
+              variant="contained-text"
+              @click="updateRoom(room)"
+            >
+              Update
             </v-btn>
           </td>
         </tr>
@@ -67,6 +77,9 @@ export default {
     async getRooms() {
       const res = await axios.get(import.meta.env.VITE_API + "/services/rooms");
       this.rooms = res.data.result;
+    },
+    updateRoom(id) {
+      this.emitter.emit("updateRoom", id);
     },
     async deleteRoom(id) {
       axios

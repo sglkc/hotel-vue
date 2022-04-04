@@ -12,7 +12,14 @@
         <v-list density="compact">
           <v-list-item>Email: {{ store.state.USER.email }}</v-list-item>
           <v-list-item>Role: {{ store.state.USER.role_name }}</v-list-item>
-          <v-list-item>Use the navigation bar to get started</v-list-item>
+          <v-list-item>
+            <b>Use the navigation bar to get started</b>
+          </v-list-item>
+          <v-list-item>
+            <v-btn color="error" variant="outlined" @click="logout">
+              Logout
+            </v-btn>
+          </v-list-item>
         </v-list>
       </v-col>
     </v-row>
@@ -50,9 +57,16 @@ export default {
     refreshLoggedIn(e) {
       this.loggedIn = e;
     },
+    logout() {
+      window.localStorage.clear();
+      location.reload();
+    },
   },
   async created() {
     this.emitter.on("refreshAdminView", this.refreshLoggedIn);
+
+    if (!this.store.state.JWT_TOKEN) return (this.loggedIn = false);
+
     axios
       .post(import.meta.env.VITE_API + "/auth/verify", {
         token: this.store.state.JWT_TOKEN,
