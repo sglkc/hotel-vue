@@ -4,6 +4,8 @@ import axios from "axios";
 import store from "../store";
 
 function verify(next) {
+  if (!store.state.JWT_TOKEN) return next({ name: "staff" });
+
   console.info("Verifying token...");
 
   axios

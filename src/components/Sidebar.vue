@@ -28,6 +28,7 @@
 
 <script>
 export default {
+  name: "Sidebar",
   data() {
     return {
       rail: true,

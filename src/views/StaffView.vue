@@ -13,7 +13,7 @@
           <v-list-item>Email: {{ store.state.USER.email }}</v-list-item>
           <v-list-item>Role: {{ store.state.USER.role_name }}</v-list-item>
           <v-list-item>
-            <b>Use the navigation bar to get started</b>
+            <b>Use the sidebar to get started</b>
           </v-list-item>
           <v-list-item>
             <v-btn color="error" variant="outlined" @click="logout">
