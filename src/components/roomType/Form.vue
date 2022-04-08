@@ -38,11 +38,20 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="12" sm="">
+        <v-col cols="12" md="">
           <v-text-field
             v-model="description"
             label="Description"
             prepend-icon="mdi-note"
+            variant="underlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="9" md="4">
+          <v-text-field
+            v-model="image"
+            label="Image URL"
+            prepend-icon="mdi-image"
             variant="underlined"
             hide-details
           ></v-text-field>
@@ -69,8 +78,9 @@ export default {
   name: "RoomTypeForm",
   data() {
     return {
-      name: "",
-      description: "",
+      name: null,
+      description: null,
+      image: null,
       price: 0,
       total: 1,
       required: (v) => !!v || "Required",
@@ -84,6 +94,7 @@ export default {
       const body = {
         name: this.name,
         description: this.description,
+        image: this.image,
         price: this.price,
         total: this.total,
       };

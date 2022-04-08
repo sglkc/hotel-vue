@@ -45,11 +45,20 @@
         </v-col>
       </v-row>
       <v-row justify="center">
-        <v-col cols="12" md="">
+        <v-col cols="12" md="7">
           <v-text-field
             v-model="description"
             label="Description"
             prepend-icon="mdi-note"
+            variant="underlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" sm="9" md="5">
+          <v-text-field
+            v-model="image"
+            label="Image URL"
+            prepend-icon="mdi-image"
             variant="underlined"
             hide-details
           ></v-text-field>
@@ -85,6 +94,7 @@ export default {
     return {
       name: this.type.name,
       description: this.type.description,
+      image: this.type.image,
       price: this.type.price,
       total: this.type.total,
       required: (v) => !!v || "Required",
@@ -95,6 +105,7 @@ export default {
       this.name = type.name;
       this.name = type.name;
       this.description = type.description;
+      this.image = type.image;
       this.price = type.price;
       this.total = type.total;
     },
@@ -108,6 +119,7 @@ export default {
           {
             name: this.name,
             description: this.description,
+            image: this.image,
             price: this.price,
             total: this.total,
           },

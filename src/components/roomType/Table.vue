@@ -7,6 +7,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Description</th>
+          <th>Image</th>
           <th>Price</th>
           <th>Rooms</th>
           <th class="text-center">Action</th>
@@ -22,6 +23,20 @@
           <td>{{ type.id }}</td>
           <td>{{ type.name }}</td>
           <td>{{ type.description ?? "-" }}</td>
+          <td>
+            <v-btn class="pa-0" variant="text">
+              <v-img transition="false" :src="type.image || notfound"></v-img>
+              <v-dialog activator="parent">
+                <v-card>
+                  <v-img
+                    width="450"
+                    :src="type.image || notfound"
+                    cover
+                  ></v-img>
+                </v-card>
+              </v-dialog>
+            </v-btn>
+          </td>
           <td>Rp.{{ type.price }}</td>
           <td>{{ type.total }}</td>
           <td class="text-center">
@@ -67,11 +82,13 @@
 
 <script>
 import axios from "axios";
+import notfound from "@/assets/notfound.png";
 
 export default {
   name: "RoomTypeTable",
   data() {
     return {
+      notfound,
       types: false,
       selected: false,
     };
@@ -106,6 +123,7 @@ export default {
   created() {
     this.emitter.on("getRoomTypes", this.getRoomTypes);
     this.getRoomTypes();
+    console.log(notfound);
   },
 };
 </script>
