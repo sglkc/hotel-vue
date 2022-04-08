@@ -79,11 +79,13 @@
 
 <script>
 import axios from "axios";
+import notfound from "@/assets/notfound.png";
 
 export default {
   name: "FacilityTable",
   data() {
     return {
+      notfound,
       facilities: false,
       selected: false,
     };

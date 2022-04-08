@@ -2,7 +2,7 @@
   <v-form ref="form">
     <v-container>
       <v-row justify="center">
-        <v-col cols="7" md="5">
+        <v-col cols="12" sm="5">
           <v-text-field
             v-model="name"
             label="Name*"
@@ -12,7 +12,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="5" md="2">
+        <v-col cols="12" sm="" md="2">
           <v-text-field
             v-model="capacity"
             type="number"
@@ -24,7 +24,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-3">
+        <v-col class="mt-3" cols="12" sm="">
           <div :style="'color: ' + (roomType ? '#00000099' : '#b00020')">
             <v-icon>mdi-bed-king</v-icon>
             <span class="ms-3">Room Type*</span>
