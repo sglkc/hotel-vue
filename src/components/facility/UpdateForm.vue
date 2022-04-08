@@ -9,7 +9,7 @@
         </v-col>
       </v-row>
       <v-row class="mt-3" justify="center">
-        <v-col cols="7" md="5">
+        <v-col cols="12" sm="5">
           <v-text-field
             v-model="name"
             label="Name*"
@@ -19,7 +19,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="5" md="5">
+        <v-col cols="12" sm="7">
           <v-text-field
             v-model="notes"
             label="Notes"
@@ -28,7 +28,16 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
+        <v-col cols="12" sm="">
+          <v-text-field
+            v-model="image"
+            label="Image URL"
+            prepend-icon="mdi-image"
+            variant="underlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col class="mt-2 mb-sm-0 mb-3" sm="auto" align="center">
           <v-btn
             class="ma-1"
             color="primary"
@@ -59,6 +68,7 @@ export default {
     return {
       name: this.facility.name,
       notes: this.facility.notes,
+      image: this.facility.image,
       required: (v) => !!v || "Required",
     };
   },
@@ -66,6 +76,7 @@ export default {
     updateFacility(facility) {
       this.name = facility.name;
       this.notes = facility.notes;
+      this.image = facility.image;
     },
     async submit() {
       const validation = await this.$refs.form.validate();
@@ -77,6 +88,7 @@ export default {
           {
             name: this.name,
             notes: this.notes,
+            image: this.image,
           },
           {
             headers: {

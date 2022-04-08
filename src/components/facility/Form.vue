@@ -2,7 +2,7 @@
   <v-form ref="form">
     <v-container>
       <v-row justify="center">
-        <v-col cols="7" md="5">
+        <v-col cols="12" sm="5">
           <v-text-field
             v-model="name"
             label="Name*"
@@ -12,7 +12,7 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col cols="5" md="5">
+        <v-col cols="12" sm="7">
           <v-text-field
             v-model="notes"
             label="Notes"
@@ -21,7 +21,16 @@
             hide-details
           ></v-text-field>
         </v-col>
-        <v-col class="mt-2 mb-sm-0 mb-3" md="auto" align="center">
+        <v-col cols="12" sm="">
+          <v-text-field
+            v-model="image"
+            label="Image URL"
+            prepend-icon="mdi-image"
+            variant="underlined"
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col class="mt-2 mb-sm-0 mb-3" sm="auto" align="center">
           <v-btn
             color="primary"
             type="submit"
@@ -43,8 +52,9 @@ export default {
   name: "FacilityForm",
   data() {
     return {
-      name: "",
+      name: null,
       notes: null,
+      image: null,
       required: (v) => !!v || "Required",
     };
   },
@@ -56,6 +66,7 @@ export default {
       const body = {
         name: this.name,
         notes: this.notes,
+        image: this.image,
       };
 
       axios

@@ -7,6 +7,7 @@
           <th>ID</th>
           <th>Name</th>
           <th>Notes</th>
+          <th>Image</th>
           <th class="text-center">Action</th>
         </tr>
       </thead>
@@ -20,6 +21,21 @@
           <td>{{ facility.id }}</td>
           <td>{{ facility.name }}</td>
           <td>{{ facility.notes ?? "-" }}</td>
+          <td>
+            <v-btn class="pa-0" variant="text">
+              <v-img transition="false" :src="facility.image || notfound">
+              </v-img>
+              <v-dialog activator="parent">
+                <v-card>
+                  <v-img
+                    width="450"
+                    :src="facility.image || notfound"
+                    cover
+                  ></v-img>
+                </v-card>
+              </v-dialog>
+            </v-btn>
+          </td>
           <td class="text-center">
             <v-btn
               class="ma-1"
