@@ -1,18 +1,17 @@
 <template>
   <v-app>
     <Sidebar v-if="isStaff" />
-    <Navbar v-else id="navbar" />
-    <v-main style="min-height: 100vh">
+    <Navbar v-else />
+    <v-main id="main">
       <router-view></router-view>
     </v-main>
-    <v-container style="height: 500px"></v-container>
   </v-app>
 </template>
 
 <style scoped>
-#navbar {
-  position: fixed;
-  z-index: 1;
+#main {
+  padding-top: 0 !important;
+  min-height: 100vh;
 }
 </style>
 

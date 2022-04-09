@@ -5,6 +5,7 @@ import { loadFonts } from "./plugins/webfontloader";
 import router from "./router";
 import mitt from "./mitt";
 import store from "./store";
+import "aos/dist/aos.css";
 
 const app = createApp(App);
 
