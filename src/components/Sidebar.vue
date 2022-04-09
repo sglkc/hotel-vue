@@ -37,6 +37,11 @@ export default {
         { title: "Staff", icon: "mdi-account", link: "staff" },
         { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },
         { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
+        {
+          title: "Room Facilities",
+          icon: "mdi-paper-roll",
+          link: "roomfacilities",
+        },
         { title: "Facilities", icon: "mdi-room-service", link: "facilities" },
       ],
     };
