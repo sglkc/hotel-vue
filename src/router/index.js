@@ -23,18 +23,12 @@ function verify(next) {
   } catch {
     next({ name: "staff" });
   }
-  /** Slow but secure way of authenticating
-  axios
-    .post(import.meta.env.VITE_API + "/auth/verify", {
-      token: store.state.JWT_TOKEN,
-    })
-    .then(() => {
-      next();
-    })
-    .catch(() => {
-      next({ name: "staff" });
-    });
-    */
+}
+
+function scrollBehavior(to) {
+  if (to.hash) {
+    return { el: to.hash, behavior: "smooth" };
+  }
 }
 
 const routes = [
@@ -83,8 +77,9 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(),
   routes,
+  scrollBehavior,
 });
 
 export default router;
