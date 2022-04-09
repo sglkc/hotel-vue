@@ -123,7 +123,6 @@ export default {
   created() {
     this.emitter.on("getRoomTypes", this.getRoomTypes);
     this.getRoomTypes();
-    console.log(notfound);
   },
 };
 </script>

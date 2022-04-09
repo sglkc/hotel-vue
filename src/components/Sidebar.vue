@@ -84,7 +84,7 @@ export default {
     },
     goto(link) {
       this.$router.push({ name: link });
-      this.current = this.$router.currentRoute._value.name;
+      this.current = link;
     },
     onClickOutside() {
       this.rail = false;
@@ -93,6 +93,9 @@ export default {
       window.localStorage.clear();
       location.reload();
     },
+  },
+  beforeMounted() {
+    this.current = this.$router.currentRoute._value.name;
   },
 };
 </script>

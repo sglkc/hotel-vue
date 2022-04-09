@@ -1,13 +1,29 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
-import axios from "axios";
+// import axios from "axios";
 import store from "../store";
 
 function verify(next) {
   if (!store.state.JWT_TOKEN) return next({ name: "staff" });
 
-  console.info("Verifying token...");
+  try {
+    const token = store.state.JWT_TOKEN;
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    const exp = parseInt(jsonPayload.exp + "000");
 
+    if (exp < Date.now()) next({ name: "staff" });
+    else next();
+  } catch {
+    next({ name: "staff" });
+  }
+  /** Slow but secure way of authenticating
   axios
     .post(import.meta.env.VITE_API + "/auth/verify", {
       token: store.state.JWT_TOKEN,
@@ -18,6 +34,7 @@ function verify(next) {
     .catch(() => {
       next({ name: "staff" });
     });
+    */
 }
 
 const routes = [
