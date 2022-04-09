@@ -3,19 +3,38 @@
     <v-list density="comfortable" nav>
       <v-list-item
         v-for="(item, i) in items"
-        class="px-2"
+        class="ps-2"
+        :active="isactive(item.link)"
         :key="i"
         :prepend-icon="item.icon"
         :title="item.title"
-        @click="this.$router.push({ name: item.link })"
-      >
-      </v-list-item>
+        @click="goto(item.link)"
+      ></v-list-item>
+      <v-list-group disabled>
+        <template v-slot:activator="{ props }">
+          <v-list-item
+            v-bind="props"
+            class="ps-2"
+            prepend-icon="mdi-account-circle"
+            title="Admin"
+          ></v-list-item>
+        </template>
+        <v-list-item
+          v-for="(item, i) in admin"
+          class="ps-2"
+          :active="isactive(item.link)"
+          :key="i + 10"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          @click="goto(item.link)"
+        ></v-list-item>
+      </v-list-group>
     </v-list>
     <span v-if="store.state.USER">
       <v-divider></v-divider>
       <v-list density="comfortable" nav>
         <v-list-item
-          class="px-2"
+          class="ps-2"
           prepend-icon="mdi-logout"
           title="Logout"
           @click="logout"
@@ -26,15 +45,28 @@
   </v-navigation-drawer>
 </template>
 
+<style scoped>
+.v-list {
+  overflow: hidden;
+}
+
+.v-list-group__items .v-list-item {
+  padding-inline-start: 8px !important;
+}
+</style>
+
 <script>
 export default {
   name: "Sidebar",
   data() {
     return {
       rail: true,
+      current: this.$router.currentRoute._value.name,
       items: [
         { title: "Home", icon: "mdi-home", link: "home" },
         { title: "Staff", icon: "mdi-account", link: "staff" },
+      ],
+      admin: [
         { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },
         { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
         {
@@ -47,6 +79,13 @@ export default {
     };
   },
   methods: {
+    isactive(link) {
+      return this.current === link;
+    },
+    goto(link) {
+      this.$router.push({ name: link });
+      this.current = this.$router.currentRoute._value.name;
+    },
     onClickOutside() {
       this.rail = false;
     },
