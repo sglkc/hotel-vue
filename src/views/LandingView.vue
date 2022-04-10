@@ -5,7 +5,6 @@
         class="h-100"
         align="center"
         data-aos="fade-up"
-        data-aos-delay="500"
         data-aos-duration="500"
         data-aos-mirror="true"
       >
@@ -15,23 +14,29 @@
               <h1 id="title" class="pa-3">Welcome to the hotel</h1>
             </v-card-title>
             <v-card-actions class="ps-3">
-              <v-btn variant="contained-text">Placeholder</v-btn>
+              <v-btn variant="contained-text" @click="scrollTo('facilities')">
+                Facilities
+              </v-btn>
             </v-card-actions>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
   </v-parallax>
-  <div style="min-height: 600px"></div>
+  <Facilities />
 </template>
 
-<style scoped>
+<style>
 .h-100vh {
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .h-100 {
   height: 100%;
+}
+
+.v-parallax .v-responsive__sizer {
+  padding-bottom: 0 !important;
 }
 
 #title {
@@ -42,15 +47,25 @@
 </style>
 
 <script>
+import Facilities from "@/components/landing/Facilities.vue";
 import AOS from "aos";
 import image from "@/assets/landing.jpg";
 
 export default {
   name: "LandingView",
+  components: {
+    Facilities,
+  },
   data() {
     return {
       image,
     };
+  },
+  methods: {
+    scrollTo(id) {
+      this.$router.push("#" + id);
+      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
+    },
   },
   mounted() {
     AOS.init();

@@ -6,7 +6,7 @@
     :elevation="scrolled ? '5' : '0'"
     :color="scrolled ? '#0000007F' : 'transparent'"
     :collapse="isxs"
-    :height="scrolled ? '64' : '128'"
+    :height="scrolled ? '52' : '128'"
   >
     <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ props }">
