@@ -14,6 +14,9 @@
               <v-card-title>
                 <h1>Welcome to the hotel</h1>
               </v-card-title>
+              <v-card-subtitle class="my-2 text-high-emphasis font-italic">
+                a perfect combination of homely ambience and modern amenities
+              </v-card-subtitle>
               <v-card-actions class="ps-3">
                 <v-btn
                   v-for="(page, i) in pages"
@@ -25,9 +28,6 @@
                   {{ page.title }}
                 </v-btn>
               </v-card-actions>
-              <v-card-subtitle class="mt-2 text-high-emphasis">
-                All rights reserved &copy; 2022
-              </v-card-subtitle>
             </v-card>
           </v-col>
         </v-row>
@@ -40,7 +40,7 @@
 #title {
   background: conic-gradient(from -90deg at 50% -25%, #0066ff3f, #8769ff);
   color: white;
-  border-radius: 15px;
+  border-radius: 0 15px 15px 0;
 }
 </style>
 
