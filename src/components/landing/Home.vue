@@ -1,7 +1,7 @@
 <template>
-  <div id="home">
+  <section id="home">
     <v-parallax class="h-100vh" :src="image">
-      <v-container class="h-100">
+      <v-container class="h-100" fluid>
         <v-row
           class="h-100"
           align="center"
@@ -9,8 +9,8 @@
           data-aos-duration="500"
           data-aos-mirror="true"
         >
-          <v-col align="center" cols="auto">
-            <v-card id="title" class="pa-2 py-4" variant="text">
+          <v-col class="ps-0" align="center" cols="auto">
+            <v-card id="title" class="ps-10 pe-3 py-4" variant="text">
               <v-card-title>
                 <h1>Welcome to the hotel</h1>
               </v-card-title>
@@ -33,7 +33,7 @@
         </v-row>
       </v-container>
     </v-parallax>
-  </div>
+  </section>
 </template>
 
 <style scoped>

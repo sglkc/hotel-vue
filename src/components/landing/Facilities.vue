@@ -1,5 +1,5 @@
 <template>
-  <div id="facilities">
+  <section id="facilities">
     <v-container class="py-12 h-100vh d-flex flex-column">
       <h1
         class="my-5 text-center"
@@ -19,8 +19,15 @@
             >
               <div class="card-content pb-3">
                 <v-card-title class="pb-0">{{ facility.name }}</v-card-title>
-                <v-card-subtitle>{{ facility.notes }}</v-card-subtitle>
+                <v-card-subtitle class="text-left text-high-emphasis">
+                  {{ facility.notes }}
+                </v-card-subtitle>
               </div>
+              <template v-slot:placeholder>
+                <div class="d-flex align-center justify-center h-100">
+                  <v-progress-circular indeterminate></v-progress-circular>
+                </div>
+              </template>
             </v-img>
           </v-card>
         </slide>
@@ -41,7 +48,7 @@
         <div>{{ description }}</div>
       </div>
     </v-container>
-  </div>
+  </section>
 </template>
 
 <style>
@@ -54,13 +61,13 @@
 }
 
 #facilities {
-  background: #f9f9f9;
+  background: linear-gradient(#f3f3f3 70%, white);
 }
 
 #carousel {
+  background-color: #7acbff2f;
   padding-top: 2rem;
   padding-bottom: 1rem;
-  background: conic-gradient(from 0.5turn at bottom left, #add8e67f, #beced33f);
   border-radius: 10px;
 }
 

@@ -81,11 +81,10 @@ export default {
       scrollY: 0,
       current: this.$router.currentRoute._value.name,
       items: [
-        { title: "Home", icon: "mdi-home", link: "home" },
-        { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },
-        { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
-        { title: "Facilities", icon: "mdi-room-service", link: "facilities" },
-        { title: "Staff", icon: "mdi-account", link: "staff" },
+        { title: "Home", icon: "mdi-home", link: "#home" },
+        { title: "Facilities", icon: "mdi-room-service", link: "#facilities" },
+        { title: "Room Types", icon: "mdi-bed-king", link: "#types" },
+        { title: "Staff", icon: "mdi-account-key", link: "/staff" },
       ],
     };
   },
@@ -108,7 +107,7 @@ export default {
       return this.current === link;
     },
     goto(link) {
-      this.$router.push({ name: link });
+      this.$router.push(link);
     },
     handleScroll() {
       this.scrollY = window.scrollY;

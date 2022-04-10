@@ -64,7 +64,7 @@ export default {
       current: this.$router.currentRoute._value.name,
       items: [
         { title: "Home", icon: "mdi-home", link: "home" },
-        { title: "Staff", icon: "mdi-account", link: "staff" },
+        { title: "Staff", icon: "mdi-account-key", link: "staff" },
       ],
       admin: [
         { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },

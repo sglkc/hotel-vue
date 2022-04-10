@@ -1,5 +1,5 @@
 <template>
-  <div id="types">
+  <section id="types">
     <v-container class="h-100vh py-12">
       <v-row>
         <v-col class="px-4 px-sm-15 mx-4 mx-sm-15" align="center">
@@ -16,9 +16,10 @@
       </v-row>
       <v-row
         v-for="(type, i) in types"
-        class="mt-6 h-100"
+        class="mt-10 h-100"
         align="center"
         data-aos-anchor-placement="center-bottom"
+        data-aos-once="true"
         justify="center"
         :data-aos="i % 2 ? 'fade-left' : 'fade-right'"
         :key="i"
@@ -61,36 +62,35 @@
                 <v-icon class="me-2">mdi-lamp</v-icon> Room Facilities
               </v-btn>
               <v-btn color="primary">
-                <v-icon class="me-2">mdi-tag-plus</v-icon> Reserve Now!
+                <v-icon class="me-2">mdi-calendar-plus</v-icon> Reserve Now!
               </v-btn>
             </v-card-actions>
             <v-expand-transition>
-              <div v-show="reveal[i]">
-                <v-divider></v-divider>
-                <v-list class="mb-2" density="compact">
-                  <v-list-item
-                    v-for="(facility, j) in type.facilities"
-                    min-height="28"
-                    :key="j"
-                  >
-                    <v-list-item-title class="me-5">
-                      {{ facility.name }}
-                    </v-list-item-title>
-                    <v-list-item-subtitle>
-                      {{ facility.notes }}
-                    </v-list-item-subtitle>
-                  </v-list-item>
-                </v-list>
-              </div>
+              <v-container
+                v-show="reveal[i]"
+                class="text-body-2 text-medium-emphasis"
+              >
+                <v-divider class="mb-3"></v-divider>
+                <v-row v-for="(facility, j) in type.facilities" :key="j">
+                  <v-col class="d-flex flex-column justify-center" cols="4">
+                    <span>{{ facility.name }}</span>
+                  </v-col>
+                  <v-col>{{ facility.notes }}</v-col>
+                </v-row>
+              </v-container>
             </v-expand-transition>
           </v-card>
         </v-col>
       </v-row>
     </v-container>
-  </div>
+  </section>
 </template>
 
 <style scoped>
+#types {
+  background: conic-gradient(from 45deg at bottom left, #a5c9ff, white);
+}
+
 .details .v-row .v-col {
   padding: 0.5em;
 }

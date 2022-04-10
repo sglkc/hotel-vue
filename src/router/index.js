@@ -1,6 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
 import LandingView from "@/views/LandingView.vue";
-// import axios from "axios";
 import store from "../store";
 
 function verify(next) {
@@ -25,10 +24,15 @@ function verify(next) {
   }
 }
 
-function scrollBehavior(to) {
-  if (to.hash) {
-    return { el: to.hash, behavior: "smooth" };
-  }
+function scrollBehavior(to, from) {
+  return new Promise((resolve) => {
+    setTimeout(
+      () => {
+        if (to.hash) resolve({ el: to.hash, behavior: "smooth" });
+      },
+      from.hash ? 0 : 1000
+    );
+  });
 }
 
 const routes = [
