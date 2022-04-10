@@ -2,6 +2,7 @@
   <v-app>
     <Sidebar v-if="isStaff" />
     <Navbar v-else />
+    <ScrollToTop />
     <v-main id="main">
       <router-view></router-view>
     </v-main>
@@ -18,12 +19,14 @@
 <script>
 import Navbar from "@/components/Navbar.vue";
 import Sidebar from "@/components/Sidebar.vue";
+import ScrollToTop from "@/components/ScrollToTop.vue";
 
 export default {
   name: "Hotel",
   components: {
     Navbar,
     Sidebar,
+    ScrollToTop,
   },
   computed: {
     isStaff() {
