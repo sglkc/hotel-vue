@@ -9,16 +9,25 @@
           data-aos-duration="500"
           data-aos-mirror="true"
         >
-          <v-col align="center">
-            <v-card variant="text">
-              <v-card-title class="ps-3">
-                <h1 id="title" class="pa-3">Welcome to the hotel</h1>
+          <v-col align="center" cols="auto">
+            <v-card id="title" class="pa-2 py-4" variant="text">
+              <v-card-title>
+                <h1>Welcome to the hotel</h1>
               </v-card-title>
               <v-card-actions class="ps-3">
-                <v-btn variant="contained-text" @click="scrollTo('facilities')">
-                  Facilities
+                <v-btn
+                  v-for="(page, i) in pages"
+                  variant="outlined"
+                  :key="i"
+                  :prepend-icon="page.icon"
+                  @click="scrollTo(page.id)"
+                >
+                  {{ page.title }}
                 </v-btn>
               </v-card-actions>
+              <v-card-subtitle class="mt-2 text-high-emphasis">
+                All rights reserved &copy; 2022
+              </v-card-subtitle>
             </v-card>
           </v-col>
         </v-row>
@@ -29,9 +38,9 @@
 
 <style scoped>
 #title {
-  background-color: #0000007f;
+  background: conic-gradient(from -90deg at 50% -25%, #0066ff3f, #8769ff);
   color: white;
-  border-radius: 0 5px 5px 0;
+  border-radius: 15px;
 }
 </style>
 
@@ -43,11 +52,15 @@ export default {
   data() {
     return {
       image,
+      pages: [
+        { title: "Facilities", icon: "mdi-room-service", id: "#facilities" },
+        { title: "Room Types", icon: "mdi-bed-king", id: "#types" },
+      ],
     };
   },
   methods: {
     scrollTo(id) {
-      this.$router.push("#" + id);
+      this.$router.push(id);
       document.getElementById(id).scrollIntoView({ behavior: "smooth" });
     },
   },

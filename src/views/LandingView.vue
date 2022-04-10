@@ -1,6 +1,7 @@
 <template>
   <Home />
   <Facilities />
+  <Types />
 </template>
 
 <style>
@@ -21,12 +22,14 @@
 import AOS from "aos";
 import Facilities from "@/components/landing/Facilities.vue";
 import Home from "@/components/landing/Home.vue";
+import Types from "@/components/landing/Types.vue";
 
 export default {
   name: "LandingView",
   components: {
     Facilities,
     Home,
+    Types,
   },
   mounted() {
     AOS.init();

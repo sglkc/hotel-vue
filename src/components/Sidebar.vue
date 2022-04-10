@@ -71,7 +71,7 @@ export default {
         { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
         {
           title: "Room Facilities",
-          icon: "mdi-paper-roll",
+          icon: "mdi-lamp",
           link: "roomfacilities",
         },
         { title: "Facilities", icon: "mdi-room-service", link: "facilities" },

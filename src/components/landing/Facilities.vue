@@ -1,9 +1,8 @@
 <template>
   <div id="facilities">
-    <v-container class="h-100vh d-flex flex-column">
-      <v-spacer></v-spacer>
+    <v-container class="py-12 h-100vh d-flex flex-column">
       <h1
-        class="mb-5 text-center"
+        class="my-5 text-center"
         data-aos="fade-down"
         data-aos-anchor-placement="bottom-bottom"
       >
