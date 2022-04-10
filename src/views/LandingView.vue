@@ -18,6 +18,7 @@
 </style>
 
 <script>
+import AOS from "aos";
 import Facilities from "@/components/landing/Facilities.vue";
 import Home from "@/components/landing/Home.vue";
 
@@ -26,6 +27,9 @@ export default {
   components: {
     Facilities,
     Home,
+  },
+  mounted() {
+    AOS.init();
   },
 };
 </script>

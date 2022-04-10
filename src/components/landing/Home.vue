@@ -36,7 +36,6 @@
 </style>
 
 <script>
-import AOS from "aos";
 import image from "@/assets/landing.jpg";
 
 export default {
@@ -51,9 +50,6 @@ export default {
       this.$router.push("#" + id);
       document.getElementById(id).scrollIntoView({ behavior: "smooth" });
     },
-  },
-  mounted() {
-    AOS.init();
   },
 };
 </script>

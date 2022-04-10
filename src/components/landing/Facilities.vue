@@ -75,7 +75,6 @@
 </style>
 
 <script>
-import AOS from "aos";
 import axios from "axios";
 import notfound from "@/assets/notfound.png";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
@@ -102,7 +101,6 @@ export default {
     };
   },
   created() {
-    AOS.init();
     axios
       .get(import.meta.env.VITE_API + "/services/facilities")
       .then((res) => {
