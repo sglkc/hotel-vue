@@ -10,7 +10,7 @@
         :title="item.title"
         @click="goto(item.link)"
       ></v-list-item>
-      <v-list-group disabled>
+      <v-list-group v-if="store.state.USER.role_name === 'admin'" disabled>
         <template v-slot:activator="{ props }">
           <v-list-item
             v-bind="props"

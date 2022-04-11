@@ -27,7 +27,7 @@
   <v-container v-else class="h-100" fluid>
     <v-row class="h-100" align="center" justify="center">
       <v-col cols="auto" md="5" lg="4">
-        <AuthForm />
+        <AuthForm :message="message" />
       </v-col>
     </v-row>
   </v-container>
@@ -51,33 +51,39 @@ export default {
   data() {
     return {
       loggedIn: null,
+      message: "",
     };
   },
   methods: {
-    refresh(e) {
-      this.loggedIn = e;
-    },
     logout() {
       window.localStorage.clear();
       location.reload();
     },
+    verifyStaff() {
+      axios
+        .post(import.meta.env.VITE_API + "/auth/verify", {
+          token: this.store.state.JWT_TOKEN,
+        })
+        .then((res) => {
+          const role = res.data.result.role_name;
+          if (role !== "admin" && role !== "receptionist") {
+            this.message = "Your account is unauthorized";
+            this.loggedIn = false;
+          } else {
+            this.loggedIn = true;
+          }
+        })
+        .catch(() => {
+          this.message = "Failed to verify token";
+          this.loggedIn = false;
+          this.store.commit("setUser", false);
+        });
+    },
   },
   async created() {
-    this.emitter.on("refreshView", this.refresh);
-
+    this.emitter.on("refreshView", this.verifyStaff);
     if (!this.store.state.JWT_TOKEN) return (this.loggedIn = false);
-
-    axios
-      .post(import.meta.env.VITE_API + "/auth/verify", {
-        token: this.store.state.JWT_TOKEN,
-      })
-      .then(() => {
-        this.loggedIn = true;
-      })
-      .catch(() => {
-        this.loggedIn = false;
-        this.store.commit("setUser", false);
-      });
+    this.verifyStaff();
   },
 };
 </script>

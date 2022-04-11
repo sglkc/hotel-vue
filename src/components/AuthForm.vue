@@ -32,7 +32,6 @@
                   :rules="[rules.required]"
                   mandatory
                 >
-                  <span class="mx-3">Select Role</span>
                   <v-item
                     v-for="role in roles"
                     v-slot="{ selectedClass, toggle }"
@@ -112,9 +111,9 @@
         </v-row>
         <v-row align="center" justify="center">
           <v-expand-transition>
-            <v-col v-show="fail" cols="auto">
+            <v-col v-show="message || fail" cols="auto">
               <v-alert density="compact" type="error" variant="contained-text">
-                {{ fail }}
+                {{ fail || message }}
               </v-alert>
             </v-col>
           </v-expand-transition>
@@ -130,6 +129,7 @@ import axios from "axios";
 export default {
   name: "LoginForm",
   props: {
+    message: String,
     user: Boolean,
   },
   data() {
@@ -194,11 +194,7 @@ export default {
         });
     },
   },
-  async created() {
-    if (this.store.state.JWT_TOKEN) {
-      this.fail = "Account expired, try to log in again";
-    }
-
+  created() {
     axios
       .get(import.meta.env.VITE_API + "/auth/roles")
       .then((res) => {
