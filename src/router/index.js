@@ -34,6 +34,15 @@ function admin(to, from, next) {
   else return next();
 }
 
+function staff(to, from, next) {
+  const decoded = decode();
+
+  if (!decoded) return next({ name: "staff" });
+  if (decoded.role_name !== "admin" && decoded.role_name !== "receptionist") {
+    return next({ name: "staff" });
+  } else return next();
+}
+
 function scrollBehavior(to, from) {
   return new Promise((resolve) => {
     setTimeout(
@@ -55,6 +64,12 @@ const routes = [
     path: "/staff",
     name: "staff",
     component: () => import("../views/StaffView.vue"),
+  },
+  {
+    path: "/staff/reservations",
+    name: "reservations",
+    component: () => import("../views/ReservationsView.vue"),
+    beforeEnter: staff,
   },
   {
     path: "/staff/rooms",

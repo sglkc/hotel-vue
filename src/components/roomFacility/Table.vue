@@ -48,7 +48,7 @@
       </tbody>
       <tbody v-else-if="facilities">
         <tr>
-          <td class="text-center font-weight-bold" colspan="5">
+          <td class="text-center font-weight-bold" colspan="7">
             <v-icon color="red">mdi-exclamation-thick</v-icon>
             <span class="text-red">Facility data is empty</span>
           </td>
@@ -56,7 +56,7 @@
       </tbody>
       <tbody v-else>
         <tr>
-          <td class="text-center font-weight-bold" colspan="5">
+          <td class="text-center font-weight-bold" colspan="7">
             <v-icon class="mdi-spin">mdi-loading</v-icon> Loading facility data
           </td>
         </tr>
@@ -77,17 +77,25 @@ export default {
     };
   },
   methods: {
-    async getRoomFacilities() {
-      const res = await axios.get(
-        import.meta.env.VITE_API + "/services/room-facilities"
-      );
-      this.facilities = res.data.result;
+    getRoomFacilities() {
+      axios
+        .get(import.meta.env.VITE_API + "/services/room-facilities", {
+          headers: {
+            Authorization: "bearer " + this.store.state.JWT_TOKEN,
+          },
+        })
+        .then((res) => {
+          this.facilities = res.data.result;
+        })
+        .catch((err) => {
+          console.error(err.response?.data.error ?? err);
+        });
     },
     updateFacility(facility) {
       this.selected = facility.id;
       this.emitter.emit("updateRoomFacility", facility);
     },
-    async deleteFacility(id) {
+    deleteFacility(id) {
       axios
         .delete(import.meta.env.VITE_API + "/services/room-facilities/" + id, {
           headers: {

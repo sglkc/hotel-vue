@@ -10,17 +10,9 @@
         :title="item.title"
         @click="goto(item.link)"
       ></v-list-item>
-      <v-list-group v-if="store.state.USER.role_name === 'admin'" disabled>
-        <template v-slot:activator="{ props }">
-          <v-list-item
-            v-bind="props"
-            class="ps-2"
-            prepend-icon="mdi-account-circle"
-            title="Admin"
-          ></v-list-item>
-        </template>
+      <span v-if="isstaff" disabled>
         <v-list-item
-          v-for="(item, i) in admin"
+          v-for="(item, i) in staff"
           class="ps-2"
           :active="isactive(item.link)"
           :key="i + 10"
@@ -28,7 +20,18 @@
           :title="item.title"
           @click="goto(item.link)"
         ></v-list-item>
-      </v-list-group>
+      </span>
+      <span v-if="isadmin">
+        <v-list-item
+          v-for="(item, i) in admin"
+          class="ps-2"
+          :active="isactive(item.link)"
+          :key="i + 20"
+          :prepend-icon="item.icon"
+          :title="item.title"
+          @click="goto(item.link)"
+        ></v-list-item>
+      </span>
     </v-list>
     <span v-if="store.state.USER">
       <v-divider></v-divider>
@@ -66,6 +69,9 @@ export default {
         { title: "Home", icon: "mdi-home", link: "home" },
         { title: "Staff", icon: "mdi-account-key", link: "staff" },
       ],
+      staff: [
+        { title: "Reservations", icon: "mdi-receipt", link: "reservations" },
+      ],
       admin: [
         { title: "Rooms", icon: "mdi-bed-king", link: "rooms" },
         { title: "Room Types", icon: "mdi-tag-multiple", link: "roomtypes" },
@@ -77,6 +83,17 @@ export default {
         { title: "Facilities", icon: "mdi-room-service", link: "facilities" },
       ],
     };
+  },
+  computed: {
+    isstaff() {
+      return (
+        this.store.state.USER.role_name === "admin" ||
+        this.store.state.USER.role_name === "receptionist"
+      );
+    },
+    isadmin() {
+      return this.store.state.USER.role_name === "admin";
+    },
   },
   methods: {
     isactive(link) {

@@ -79,15 +79,25 @@ export default {
     };
   },
   methods: {
-    async getRooms() {
-      const res = await axios.get(import.meta.env.VITE_API + "/services/rooms");
-      this.rooms = res.data.result;
+    getRooms() {
+      axios
+        .get(import.meta.env.VITE_API + "/services/rooms", {
+          headers: {
+            Authorization: "bearer " + this.store.state.JWT_TOKEN,
+          },
+        })
+        .then((res) => {
+          this.rooms = res.data.result;
+        })
+        .catch((err) => {
+          console.error(err.response?.data.error ?? err);
+        });
     },
     updateRoom(room) {
       this.selected = room.id;
       this.emitter.emit("updateRoom", room);
     },
-    async deleteRoom(id) {
+    deleteRoom(id) {
       axios
         .delete(import.meta.env.VITE_API + "/services/rooms/" + id, {
           headers: {

@@ -94,17 +94,25 @@ export default {
     };
   },
   methods: {
-    async getRoomTypes() {
-      const res = await axios.get(
-        import.meta.env.VITE_API + "/services/room-types"
-      );
-      this.types = res.data.result;
+    getRoomTypes() {
+      axios
+        .get(import.meta.env.VITE_API + "/services/room-types", {
+          headers: {
+            Authorization: "bearer " + this.store.state.JWT_TOKEN,
+          },
+        })
+        .then((res) => {
+          this.types = res.data.result;
+        })
+        .catch((err) => {
+          console.error(err.response?.data.error ?? err);
+        });
     },
     updateRoomType(type) {
       this.selected = type.id;
       this.emitter.emit("updateRoomType", type);
     },
-    async deleteRoomType(id) {
+    deleteRoomType(id) {
       axios
         .delete(import.meta.env.VITE_API + "/services/room-types/" + id, {
           headers: {
