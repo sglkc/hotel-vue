@@ -54,7 +54,7 @@ export default {
     };
   },
   methods: {
-    refreshLoggedIn(e) {
+    refresh(e) {
       this.loggedIn = e;
     },
     logout() {
@@ -63,7 +63,7 @@ export default {
     },
   },
   async created() {
-    this.emitter.on("refreshStaffView", this.refreshLoggedIn);
+    this.emitter.on("refreshView", this.refresh);
 
     if (!this.store.state.JWT_TOKEN) return (this.loggedIn = false);
 

@@ -2,6 +2,7 @@
   <Home />
   <Facilities />
   <Types />
+  <Reservation />
   <Footer />
 </template>
 
@@ -24,6 +25,7 @@ import AOS from "aos";
 import Facilities from "@/components/landing/Facilities.vue";
 import Home from "@/components/landing/Home.vue";
 import Types from "@/components/landing/Types.vue";
+import Reservation from "@/components/landing/Reservation.vue";
 import Footer from "@/components/landing/Footer.vue";
 
 export default {
@@ -32,10 +34,13 @@ export default {
     Facilities,
     Home,
     Types,
+    Reservation,
     Footer,
   },
   mounted() {
-    AOS.init();
+    AOS.init({
+      once: true,
+    });
   },
 };
 </script>

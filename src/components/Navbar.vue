@@ -84,6 +84,7 @@ export default {
         { title: "Home", icon: "mdi-home", link: "#home" },
         { title: "Facilities", icon: "mdi-room-service", link: "#facilities" },
         { title: "Room Types", icon: "mdi-bed-king", link: "#types" },
+        { title: "Reservation", icon: "mdi-calendar", link: "#reservation" },
         { title: "Staff", icon: "mdi-account-key", link: "/staff" },
       ],
     };

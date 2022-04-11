@@ -55,13 +55,13 @@ export default {
       pages: [
         { title: "Facilities", icon: "mdi-room-service", id: "#facilities" },
         { title: "Room Types", icon: "mdi-bed-king", id: "#types" },
+        { title: "Reservation", icon: "mdi-calendar", id: "#reservation" },
       ],
     };
   },
   methods: {
     scrollTo(id) {
       this.$router.push(id);
-      document.getElementById(id).scrollIntoView({ behavior: "smooth" });
     },
   },
 };

@@ -1,25 +1,29 @@
 <template>
-  <v-form ref="form">
-    <v-card class="pa-3" elevation="6" height="100%">
-      <v-card-title class="justify-center">
-        <h3>Enter your credentials</h3>
+  <v-card class="pa-3" elevation="6" height="100%">
+    <v-form ref="form">
+      <v-card-title class="flex-column justify-center">
+        <h3>{{ user ? "Log in to an account" : "Enter your credentials" }}</h3>
       </v-card-title>
+      <v-card-subtitle v-if="user" style="width: 25em">
+        Please log in or register an account to continue to reservation process.
+      </v-card-subtitle>
       <v-container>
         <v-expand-transition>
           <div v-show="registerForm">
             <v-row justify="center">
               <v-col>
                 <v-text-field
-                  v-model="name"
-                  desnity="comfortable"
+                  v-model="full_name"
+                  density="comfortable"
                   label="Full Name"
+                  variant="outlined"
                   :rules="registerForm ? [rules.required] : []"
                   hide-details
                 >
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row>
+            <v-row v-if="!user">
               <v-col>
                 <v-item-group
                   v-model="roleId"
@@ -59,8 +63,9 @@
               v-model="email"
               density="comfortable"
               label="Email"
+              variant="outlined"
               :rules="[rules.required, rules.email]"
-              autofocus
+              :autofocus="!user"
               hide-details
             ></v-text-field>
           </v-col>
@@ -72,31 +77,33 @@
               density="comfortable"
               label="Password"
               type="password"
+              variant="outlined"
               :rules="[rules.required]"
               hide-details
             ></v-text-field>
           </v-col>
         </v-row>
-        <v-row justify="center">
-          <v-col>
+        <v-row>
+          <v-col cols="auto">
             <v-btn
               variant="outlined"
               color="success"
               @click="registerForm = !registerForm"
             >
-              <v-icon>
+              <v-icon class="me-1">
                 {{ registerForm ? "mdi-login" : "mdi-account-plus" }}
               </v-icon>
               {{ registerForm ? "To Login" : "To Register" }}
             </v-btn>
           </v-col>
-          <v-col cols="auto" align-self="center">
+          <v-spacer></v-spacer>
+          <v-col cols="auto">
             <v-btn
               color="primary"
               type="submit"
               @click="registerForm ? register() : login()"
             >
-              <v-icon>
+              <v-icon class="me-1">
                 {{ registerForm ? "mdi-account-plus" : "mdi-login" }}
               </v-icon>
               {{ registerForm ? "Register" : "Login" }}
@@ -106,13 +113,15 @@
         <v-row align="center" justify="center">
           <v-expand-transition>
             <v-col v-show="fail" cols="auto">
-              <v-alert density="compact" type="error">{{ fail }}</v-alert>
+              <v-alert density="compact" type="error" variant="contained-text">
+                {{ fail }}
+              </v-alert>
             </v-col>
           </v-expand-transition>
         </v-row>
       </v-container>
-    </v-card>
-  </v-form>
+    </v-form>
+  </v-card>
 </template>
 
 <script>
@@ -120,12 +129,15 @@ import axios from "axios";
 
 export default {
   name: "LoginForm",
+  props: {
+    user: Boolean,
+  },
   data() {
     return {
-      name: "",
-      roleId: "",
-      email: "",
-      password: "",
+      full_name: null,
+      roleId: this.user ? 3 : null,
+      email: null,
+      password: null,
       rules: {
         email: (v) => {
           const pattern = /^[\w]+@\w+\.[a-z]{2,}$/;
@@ -145,7 +157,7 @@ export default {
       if (!this.roleId) return (this.fail = "Select a role for the account");
 
       const body = {
-        full_name: this.name,
+        full_name: this.full_name,
         email: this.email,
         password: this.password,
         role: this.roleId,
@@ -175,7 +187,7 @@ export default {
         .then((res) => {
           this.store.commit("setJWT", res.data.result.token);
           this.store.commit("setUser", res.data.result.user);
-          this.emitter.emit("refreshStaffView", true);
+          this.emitter.emit("refreshView", true);
         })
         .catch((err) => {
           this.fail = err.response?.data.error ?? err;
@@ -183,7 +195,9 @@ export default {
     },
   },
   async created() {
-    if (this.store.state.JWT_TOKEN) this.fail = "Token expired";
+    if (this.store.state.JWT_TOKEN) {
+      this.fail = "Account expired, try to log in again";
+    }
 
     axios
       .get(import.meta.env.VITE_API + "/auth/roles")
