@@ -8,6 +8,7 @@
           data-aos="fade-up"
           data-aos-duration="500"
           data-aos-mirror="true"
+          data-aos-once="false"
         >
           <v-col class="ps-0" align="center" cols="auto">
             <v-card id="title" class="ps-10 pe-3 py-4" variant="text">
@@ -17,17 +18,6 @@
               <v-card-subtitle class="my-2 text-high-emphasis font-italic">
                 a perfect combination of homely ambience and modern amenities
               </v-card-subtitle>
-              <v-card-actions class="ps-3">
-                <v-btn
-                  v-for="(page, i) in pages"
-                  variant="outlined"
-                  :key="i"
-                  :prepend-icon="page.icon"
-                  @click="scrollTo(page.id)"
-                >
-                  {{ page.title }}
-                </v-btn>
-              </v-card-actions>
             </v-card>
           </v-col>
         </v-row>

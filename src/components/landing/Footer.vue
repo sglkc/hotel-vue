@@ -1,6 +1,12 @@
 <template>
   <footer id="footer" class="text-white">
-    <v-container class="px-3 pt-5" fluid>
+    <v-container
+      class="px-3 pt-5"
+      data-aos="slide-up"
+      data-aos-anchor-placement="center-bottom"
+      data-aos-once="false"
+      fluid
+    >
       <v-row class="mb-3 text-high-emphasis text-body-2" justify="center">
         <v-col cols="auto">
           <div class="mb-2">

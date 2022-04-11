@@ -1,12 +1,11 @@
 <template>
   <v-app-bar
     id="navbar"
-    class="pe-5"
-    :class="scrolled ? '' : 'hidden'"
+    class="pe-3 pe-sm-8"
+    color="#0000007F"
     :elevation="scrolled ? '5' : '0'"
-    :color="scrolled ? '#0000007F' : 'transparent'"
     :collapse="isxs"
-    :height="scrolled ? '52' : '128'"
+    :height="scrolled ? '52' : '84'"
   >
     <v-menu transition="slide-y-transition">
       <template v-slot:activator="{ props }">
@@ -33,7 +32,6 @@
         </v-list-item>
       </v-list>
     </v-menu>
-    <v-toolbar-title class="d-none d-sm-flex">Hotel</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items>
       <v-btn

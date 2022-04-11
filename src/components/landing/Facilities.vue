@@ -1,6 +1,6 @@
 <template>
   <section id="facilities">
-    <v-container class="py-12 h-100vh d-flex flex-column">
+    <v-container class="py-15 mb-10 h-100vh d-flex flex-column">
       <h1
         class="my-5 text-center"
         data-aos="fade-down"
@@ -8,7 +8,13 @@
       >
         Our Facilities
       </h1>
-      <carousel id="carousel" :autoplay="5000" :itemsToShow="3 / 2" wrapAround>
+      <carousel
+        id="carousel"
+        class="mx-6 mx-md-0"
+        :autoplay="5000"
+        :itemsToShow="3 / 2"
+        wrapAround
+      >
         <slide v-for="(facility, i) in facilities" :key="i">
           <v-card width="450">
             <v-img
@@ -16,6 +22,7 @@
               height="300"
               :src="facility.image || notfound"
               cover
+              eager
             >
               <div class="card-content pb-3">
                 <v-card-title class="pb-0">{{ facility.name }}</v-card-title>

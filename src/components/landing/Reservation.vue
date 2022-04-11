@@ -2,7 +2,11 @@
   <section id="reservation">
     <v-parallax class="h-100vh" :src="image">
       <v-container class="my-12 py-12 h-100vh">
-        <v-row justify="center">
+        <v-row
+          justify="center"
+          data-aos="flip-up"
+          data-aos-anchor-placement="top-center"
+        >
           <v-col align="center" cols="auto">
             <AuthForm v-if="!loggedIn" user />
             <ReservationForm v-else />

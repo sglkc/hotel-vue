@@ -16,7 +16,7 @@
       </v-row>
       <v-row
         v-for="(type, i) in types"
-        class="mt-10 h-100"
+        class="mt-15 h-100"
         align="center"
         data-aos-anchor-placement="center-bottom"
         data-aos-once="true"
@@ -24,14 +24,12 @@
         :data-aos="i % 2 ? 'fade-left' : 'fade-right'"
         :key="i"
       >
-        <v-col class="pa-0 h-100" :order="i % 2">
+        <v-col class="pa-0 h-100" cols="12" md="6" :order="i % 2">
           <v-img height="320" :src="type.image || notfound" eager></v-img>
         </v-col>
-        <v-col>
+        <v-col cols="10" sm="8" md="6" :order="issm ? 5 : 0">
           <v-card>
-            <v-card-title>
-              <h3>{{ type.name }}</h3>
-            </v-card-title>
+            <v-card-title class="text-h6">{{ type.name }}</v-card-title>
             <v-card-subtitle class="d-block">
               <h3 class="font-weight-regular">{{ type.description }}</h3>
               <v-divider class="my-3"></v-divider>
@@ -108,6 +106,11 @@ export default {
       types: [],
       reveal: [],
     };
+  },
+  computed: {
+    issm() {
+      return this.$vuetify.display.xs || this.$vuetify.display.sm;
+    },
   },
   methods: {
     toggle(id) {
