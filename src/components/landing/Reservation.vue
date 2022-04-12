@@ -7,15 +7,26 @@
           data-aos="flip-up"
           data-aos-anchor-placement="top-center"
         >
-          <v-col align="center" cols="8" sm="7" md="6" lg="4">
+          <v-col
+            align="center"
+            :cols="form ? 8 : 12"
+            :sm="form ? 7 : 11"
+            :md="form ? 6 : 11"
+            :lg="form ? 4 : 9"
+          >
             <v-expand-transition>
               <div v-show="!loggedIn">
                 <AuthForm user />
               </div>
             </v-expand-transition>
             <v-expand-transition>
-              <div v-show="loggedIn">
+              <div v-show="loggedIn && form">
                 <ReservationForm />
+              </div>
+            </v-expand-transition>
+            <v-expand-transition>
+              <div v-show="loggedIn && !form">
+                <ReservationTable />
               </div>
             </v-expand-transition>
           </v-col>
@@ -29,6 +40,7 @@
 import axios from "axios";
 import AuthForm from "@/components/AuthForm.vue";
 import ReservationForm from "@/components/landing/ReservationForm.vue";
+import ReservationTable from "@/components/landing/ReservationTable.vue";
 import image from "@/assets/reservation.jpg";
 
 export default {
@@ -36,20 +48,26 @@ export default {
   components: {
     AuthForm,
     ReservationForm,
+    ReservationTable,
   },
   data() {
     return {
       image,
       loggedIn: false,
+      form: true,
     };
   },
   methods: {
     refresh(e) {
       this.loggedIn = e;
     },
+    toggleForm(e) {
+      this.form = e;
+    },
   },
   created() {
     this.emitter.on("refreshView", this.refresh);
+    this.emitter.on("toggleForm", this.toggleForm);
 
     if (!this.store.state.JWT_TOKEN) return (this.loggedIn = false);
 

@@ -51,23 +51,21 @@
           ></v-btn>
         </v-col>
       </v-row>
-      <v-radio-group
-        v-if="rooms.length"
-        v-model="room"
-        class="mb-2 text-start"
-        :rules="[rules.required]"
-        hide-details
-        inline
-        mandatory
-      >
-        <div class="ms-3">Select Room</div>
-        <v-radio
-          v-for="(room, i) in rooms"
-          :key="i"
-          :label="room.name"
-          :value="room.id"
-        ></v-radio>
-      </v-radio-group>
+      <v-row v-if="rooms.length" class="ms-1 mt-3 mb-0">
+        <div class="text-medium-emphasis">Select Rooms</div>
+      </v-row>
+      <v-row v-if="rooms.length" class="mb-0">
+        <v-col v-for="(room, i) in rooms" :key="i" align="left" cols="auto">
+          <v-checkbox
+            v-model="selected_rooms"
+            density="compact"
+            :error="!selected_rooms.length"
+            :label="room.name"
+            :value="room.id"
+            hide-details
+          ></v-checkbox>
+        </v-col>
+      </v-row>
       <v-alert
         v-else-if="!rooms.length && type.name"
         class="mb-4 text-start"
@@ -85,7 +83,7 @@
         label="Phone Number"
         prepend-inner-icon="mdi-phone"
         variant="outlined"
-        :rules="[rules.number]"
+        :rules="[rules.required, rules.number]"
         hide-details
       ></v-text-field>
       <v-row>
@@ -158,6 +156,19 @@
           </v-btn>
         </v-col>
       </v-row>
+      <v-row v-if="reservations.length">
+        <v-col class="pb-0">
+          <v-btn
+            color="primary"
+            density="comfortable"
+            variant="text"
+            @click="toggleForm"
+            block
+          >
+            Open My Reservations
+          </v-btn>
+        </v-col>
+      </v-row>
     </v-form>
   </v-card>
 </template>
@@ -183,7 +194,7 @@ export default {
       phone: null,
       type: {},
       rooms: [],
-      room: null,
+      selected_rooms: [],
       checkin: null,
       checkout: null,
       rules: {
@@ -196,6 +207,7 @@ export default {
         checkout: null,
       },
       status: [],
+      reservations: [],
     };
   },
   computed: {
@@ -214,7 +226,7 @@ export default {
     },
     getRooms(id) {
       axios
-        .get(import.meta.env.VITE_API + `/services/room-types/${id}/rooms`)
+        .get(import.meta.env.VITE_API + `/services/room-types/${id}/available`)
         .then((res) => {
           this.rooms = res.data.result;
         })
@@ -247,13 +259,15 @@ export default {
       if (this.states.checkin === false || this.states.checkout === false) {
         return;
       }
+      if (!this.selected_rooms.length) return;
       if (!validation.valid) return;
 
       axios
         .post(
           import.meta.env.VITE_API + "/services/reservations",
           {
-            room_id: this.room,
+            room_type: this.type.id,
+            room_id: this.selected_rooms,
             user_id: this.user.id,
             phone: this.phone,
             checkin: this.formatDate(this.checkin),
@@ -266,6 +280,7 @@ export default {
           }
         )
         .then(() => {
+          this.getRooms();
           this.status = [
             "success",
             "mdi-bookmark-check",
@@ -280,9 +295,29 @@ export default {
           ];
         });
     },
+    toggleForm() {
+      this.emitter.emit("toggleForm", false);
+    },
   },
   created() {
     this.emitter.on("selectType", this.selectType);
+
+    axios
+      .get(
+        import.meta.env.VITE_API +
+          `/services/users/${this.user.id}/reservations`,
+        {
+          headers: {
+            Authorization: "bearer " + this.store.state.JWT_TOKEN,
+          },
+        }
+      )
+      .then((res) => {
+        this.reservations = res.data.result;
+      })
+      .catch((err) => {
+        console.error(err.response?.data.error ?? err);
+      });
   },
 };
 </script>
