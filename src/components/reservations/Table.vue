@@ -8,35 +8,21 @@
           <th>Name</th>
           <th>Email</th>
           <th>Phone</th>
-          <th>Notes</th>
+          <th>Check In</th>
+          <th>Check Out</th>
           <th>Created At</th>
-          <th class="text-center">Action</th>
         </tr>
       </thead>
       <tbody v-if="filtered.length">
-        <tr
-          v-for="(data, i) in filtered"
-          :style="data.id === selected ? 'background: #EEE' : ''"
-          :key="i"
-        >
+        <tr v-for="(data, i) in filtered" :key="i">
           <td>{{ data.id }}</td>
           <td>{{ data.room_name }}</td>
           <td>{{ data.user_name }}</td>
           <td>{{ data.email }}</td>
           <td>{{ data.phone }}</td>
-          <td>{{ data.notes }}</td>
+          <td>{{ new Date(data.checkin).toLocaleDateString() }}</td>
+          <td>{{ new Date(data.checkout).toLocaleDateString() }}</td>
           <td>{{ new Date(data.created_at).toLocaleString() }}</td>
-          <td class="text-center">
-            <v-btn
-              class="ma-1"
-              color="error"
-              size="small"
-              variant="contained-text"
-              @click="deleteData(data.id)"
-            >
-              Delete
-            </v-btn>
-          </td>
         </tr>
       </tbody>
       <tbody v-else-if="filtered">
@@ -67,29 +53,29 @@ export default {
   data() {
     return {
       entries: [],
-      selected: false,
-      filter: "",
+      filter: null,
+      date: null,
     };
   },
   computed: {
     filtered() {
-      if (!this.filter) return this.entries;
+      if (!this.filter && !this.date) return this.entries;
       return this.entries.filter((e) => {
-        const date = new Date(e.created_at).toLocaleString();
-        const string = `
-          ${e.user_name}${e.email}${e.phone}
-          ${this.filter.includes("DATE:") ? date : ""}
-          `;
-        const sanitized = this.filter
-          .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-          .replace("DATE:", ".*");
-        return string.match(new RegExp(`.*${sanitized}.*`, "i"));
+        const string = `${e.user_name}${e.email}${e.phone}`;
+        const date = new Date(e.checkin).toLocaleDateString();
+
+        if (!this.date) return string.includes(this.filter);
+        return (
+          string.includes(this.filter) &&
+          date === this.date.toLocaleDateString()
+        );
       });
     },
   },
   methods: {
     filterTable(filter) {
-      this.filter = filter;
+      this.filter = filter.filter;
+      this.date = filter.date;
     },
     getData() {
       axios
@@ -100,25 +86,6 @@ export default {
         })
         .then((res) => {
           this.entries = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
-    updateData(data) {
-      this.selected = data.id;
-      this.emitter.emit("updateData", data);
-    },
-    deleteData(id) {
-      axios
-        .delete(import.meta.env.VITE_API + "/services/rooms/" + id, {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then(() => {
-          if (this.selected === id) this.emitter.emit("updateData", false);
-          this.getData();
         })
         .catch((err) => {
           console.error(err.response?.data.error ?? err);

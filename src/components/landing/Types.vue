@@ -1,6 +1,6 @@
 <template>
   <section id="types">
-    <v-container class="h-100vh py-12">
+    <v-container class="h-100vh py-16">
       <v-row>
         <v-col class="px-4 px-sm-15 mx-4 mx-sm-15" align="center">
           <h1>Room Types</h1>
@@ -59,7 +59,7 @@
               <v-btn color="primary" variant="outlined" @click="toggle(i)">
                 <v-icon class="me-2">mdi-lamp</v-icon> Room Facilities
               </v-btn>
-              <v-btn color="primary">
+              <v-btn color="primary" @click="selectType(type)">
                 <v-icon class="me-2">mdi-calendar-plus</v-icon> Reserve Now!
               </v-btn>
             </v-card-actions>
@@ -115,6 +115,10 @@ export default {
   methods: {
     toggle(id) {
       this.reveal[id] = !this.reveal[id];
+    },
+    selectType(type) {
+      this.emitter.emit("selectType", type);
+      this.$router.push("#reservation");
     },
   },
   created() {

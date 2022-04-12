@@ -7,9 +7,17 @@
           data-aos="flip-up"
           data-aos-anchor-placement="top-center"
         >
-          <v-col align="center" cols="auto">
-            <AuthForm v-if="!loggedIn" user />
-            <ReservationForm v-else />
+          <v-col align="center" cols="8" sm="7" md="6" lg="4">
+            <v-expand-transition>
+              <div v-show="!loggedIn">
+                <AuthForm user />
+              </div>
+            </v-expand-transition>
+            <v-expand-transition>
+              <div v-show="loggedIn">
+                <ReservationForm />
+              </div>
+            </v-expand-transition>
           </v-col>
         </v-row>
       </v-container>
@@ -54,7 +62,6 @@ export default {
       })
       .catch(() => {
         this.loggedIn = false;
-        this.store.commit("setUser", false);
       });
   },
 };

@@ -23,7 +23,7 @@
                 </v-text-field>
               </v-col>
             </v-row>
-            <v-row v-if="!user">
+            <v-row v-if="!user" class="mb-2">
               <v-col>
                 <v-item-group
                   v-model="roleId"

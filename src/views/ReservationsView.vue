@@ -20,7 +20,7 @@
       <v-col>
         <Datepicker
           v-model="date"
-          placeholder="Filter by date"
+          placeholder="Filter by check in date"
           :enableTimePicker="false"
           @update:modelValue="filterTable"
         />
@@ -59,15 +59,10 @@ export default {
   },
   methods: {
     filterTable() {
-      const date = this.date ? this.date.toLocaleDateString() : "";
-      let filter = this.filter;
-
-      if (date) filter = filter + "DATE:" + date;
-      else if (!filter && !date) filter = null;
-
-      console.log(filter);
-
-      this.emitter.emit("filterTable", filter);
+      this.emitter.emit("filterTable", {
+        filter: this.filter,
+        date: this.date,
+      });
     },
   },
 };
