@@ -70,28 +70,59 @@
       </v-col>
       <v-col class="pa-0 ms-1">
         <v-btn
+          color="blue"
+          density="comfortable"
+          variant="outlined"
+          @click="receipt = true"
+          block
+        >
+          View Receipt
+        </v-btn>
+      </v-col>
+      <v-col class="pa-0 ms-1">
+        <v-btn
           color="primary"
           density="comfortable"
           variant="outlined"
-          @click="getReceipt"
+          @click="$router.push('/receipt')"
           block
         >
-          Get Receipt
+          Go To Receipt Page
         </v-btn>
       </v-col>
     </v-row>
+    <v-dialog v-model="receipt" @click="receipt = false" fullscreen>
+      <v-container class="pa-0">
+        <Receipt id="receipt" class="px-10" />
+      </v-container>
+    </v-dialog>
   </v-card>
 </template>
 
+<style scoped>
+#receipt {
+  background-color: white;
+  -webkit-transform: scale(0.7, 0.7);
+  -moz-transform: scale(0.7, 0.7);
+  transform: scale(0.7, 0.7);
+  transform-origin: top;
+}
+</style>
+
 <script>
 import axios from "axios";
+import Receipt from "@/components/Receipt.vue";
 
 export default {
   name: "ReservationTable",
+  components: {
+    Receipt,
+  },
   data() {
     return {
       user: this.store.state.USER,
       reservations: [],
+      receipt: false,
     };
   },
   methods: {

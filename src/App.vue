@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <Sidebar v-if="isStaff" />
-    <Navbar v-else />
-    <ScrollToTop />
+    <Navbar v-else-if="!isReceipt" />
+    <ScrollToTop v-if="!isReceipt" />
     <v-main id="main">
       <router-view></router-view>
     </v-main>
@@ -31,6 +31,9 @@ export default {
   computed: {
     isStaff() {
       return this.$router.currentRoute.value.path.includes("staff");
+    },
+    isReceipt() {
+      return this.$router.currentRoute.value.name === "receipt";
     },
   },
 };

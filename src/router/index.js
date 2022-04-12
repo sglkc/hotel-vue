@@ -30,17 +30,26 @@ function admin(to, from, next) {
   const decoded = decode();
 
   if (!decoded) return next({ name: "staff" });
-  if (decoded.role_name !== "admin") return next({ name: "staff" });
-  else return next();
+  if (["admin"].includes(decoded.role_name)) return next();
+  else return next({ name: "staff" });
 }
 
 function staff(to, from, next) {
   const decoded = decode();
 
   if (!decoded) return next({ name: "staff" });
-  if (decoded.role_name !== "admin" && decoded.role_name !== "receptionist") {
-    return next({ name: "staff" });
-  } else return next();
+  if (["admin", "receptionist"].includes(decoded.role_name)) {
+    return next();
+  } else return next({ name: "staff" });
+}
+
+function user(to, from, next) {
+  const decoded = decode();
+
+  if (!decoded) return next("/");
+  if (["admin", "receptionist", "user"].includes(decoded.role_name)) {
+    return next();
+  } else return next("/");
 }
 
 function scrollBehavior(to, from) {
@@ -59,6 +68,12 @@ const routes = [
     path: "/",
     name: "home",
     component: LandingView,
+  },
+  {
+    path: "/receipt",
+    name: "receipt",
+    component: () => import("../components/Receipt.vue"),
+    beforeEnter: user,
   },
   {
     path: "/staff",
