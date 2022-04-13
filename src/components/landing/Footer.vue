@@ -3,7 +3,7 @@
     <v-container
       class="px-3 pt-5"
       data-aos="slide-up"
-      data-aos-anchor-placement="center-bottom"
+      data-aos-anchor-placement="top-bottom"
       data-aos-once="false"
       fluid
     >

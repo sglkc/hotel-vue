@@ -83,12 +83,11 @@
       <v-alert
         v-else-if="!rooms.length && type.name"
         class="mb-4 text-start"
-        color="error"
+        color="red"
         density="compact"
-        variant="outlined"
+        variant="contained-text"
       >
-        <v-icon class="me-1">mdi-close-circle</v-icon>
-        No rooms available for type {{ type.name }}.
+        <b>{{ type.name }} room type has been sold out.</b>
       </v-alert>
       <v-row>
         <v-col class="pe-2">
@@ -130,7 +129,7 @@
           v-show="status.length"
           class="text-start mt-4"
           density="compact"
-          variant="outlined"
+          variant="contained-text"
           :color="status[0]"
           :icon="status[1]"
         >
@@ -320,9 +319,15 @@ export default {
     toggleForm() {
       this.emitter.emit("toggleForm", false);
     },
+    refreshData() {
+      this.status = [];
+      this.getRooms(this.type.id);
+      this.getReservations();
+    },
   },
   created() {
     this.emitter.on("selectType", this.selectType);
+    this.emitter.on("toggleForm", this.refreshData);
     this.getReservations();
   },
 };

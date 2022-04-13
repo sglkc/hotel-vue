@@ -163,6 +163,7 @@ export default {
     },
   },
   created() {
+    this.emitter.on("toggleForm", this.getReservations);
     this.getReservations();
   },
 };
