@@ -38,7 +38,7 @@
         </tbody>
         <tbody v-else-if="reservations">
           <tr>
-            <td class="text-center font-weight-bold" colspan="7">
+            <td class="text-center font-weight-bold" colspan="8">
               <v-icon class="me-2">mdi-exclamation-thick</v-icon>
               Reservations are empty
             </td>

@@ -17,16 +17,30 @@
         disabled
         hide-details
       ></v-text-field>
-      <v-text-field
-        class="mb-4"
-        density="comfortable"
-        label="Email Address"
-        prepend-inner-icon="mdi-email"
-        variant="outlined"
-        :modelValue="user.email"
-        disabled
-        hide-details
-      ></v-text-field>
+      <v-row class="mb-4">
+        <v-col class="pb-0 pe-2">
+          <v-text-field
+            density="comfortable"
+            label="Email Address"
+            prepend-inner-icon="mdi-email"
+            variant="outlined"
+            :modelValue="user.email"
+            disabled
+            hide-details
+          ></v-text-field>
+        </v-col>
+        <v-col class="pb-0 ps-2">
+          <v-text-field
+            density="comfortable"
+            label="Phone Number"
+            prepend-inner-icon="mdi-phone"
+            variant="outlined"
+            :modelValue="user.phone"
+            disabled
+            hide-details
+          ></v-text-field>
+        </v-col>
+      </v-row>
       <v-row class="my-3" justify="center" align="center">
         <v-col class="py-0">
           <v-text-field
@@ -76,16 +90,6 @@
         <v-icon class="me-1">mdi-close-circle</v-icon>
         No rooms available for type {{ type.name }}.
       </v-alert>
-      <v-text-field
-        v-model="phone"
-        class="mb-4"
-        density="comfortable"
-        label="Phone Number"
-        prepend-inner-icon="mdi-phone"
-        variant="outlined"
-        :rules="[rules.required, rules.number]"
-        hide-details
-      ></v-text-field>
       <v-row>
         <v-col class="pe-2">
           <Datepicker
@@ -200,7 +204,6 @@ export default {
       rules: {
         type: (v) => v !== "Please select from above" || "Type not selected",
         required: (v) => !!v || "Required",
-        number: (v) => Number.isInteger(Number(v)) || "Must be number",
       },
       states: {
         checkin: null,
@@ -229,6 +232,24 @@ export default {
         .get(import.meta.env.VITE_API + `/services/room-types/${id}/available`)
         .then((res) => {
           this.rooms = res.data.result;
+        })
+        .catch((err) => {
+          console.error(err.response?.data.error ?? err);
+        });
+    },
+    getReservations() {
+      axios
+        .get(
+          import.meta.env.VITE_API +
+            `/services/users/${this.user.id}/reservations`,
+          {
+            headers: {
+              Authorization: "bearer " + this.store.state.JWT_TOKEN,
+            },
+          }
+        )
+        .then((res) => {
+          this.reservations = res.data.result;
         })
         .catch((err) => {
           console.error(err.response?.data.error ?? err);
@@ -281,6 +302,7 @@ export default {
         )
         .then(() => {
           this.getRooms();
+          this.getReservations();
           this.status = [
             "success",
             "mdi-bookmark-check",
@@ -301,23 +323,7 @@ export default {
   },
   created() {
     this.emitter.on("selectType", this.selectType);
-
-    axios
-      .get(
-        import.meta.env.VITE_API +
-          `/services/users/${this.user.id}/reservations`,
-        {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        }
-      )
-      .then((res) => {
-        this.reservations = res.data.result;
-      })
-      .catch((err) => {
-        console.error(err.response?.data.error ?? err);
-      });
+    this.getReservations();
   },
 };
 </script>

@@ -23,6 +23,19 @@
                 </v-text-field>
               </v-col>
             </v-row>
+            <v-row justify="center">
+              <v-col>
+                <v-text-field
+                  v-model="phone"
+                  density="comfortable"
+                  label="Phone Number"
+                  variant="outlined"
+                  :rules="registerForm ? [rules.required, rules.number] : []"
+                  hide-details
+                >
+                </v-text-field>
+              </v-col>
+            </v-row>
             <v-row v-if="!user" class="mb-2">
               <v-col>
                 <v-item-group
@@ -137,6 +150,7 @@ export default {
       full_name: null,
       roleId: this.user ? 3 : null,
       email: null,
+      phone: null,
       password: null,
       rules: {
         email: (v) => {
@@ -144,6 +158,7 @@ export default {
           return pattern.test(v) || "Invalid e-mail";
         },
         required: (v) => !!v || "Required",
+        number: (v) => Number.isInteger(Number(v)) || "Must be number",
       },
       fail: false,
       registerForm: false,
@@ -159,6 +174,7 @@ export default {
       const body = {
         full_name: this.full_name,
         email: this.email,
+        phone: this.phone,
         password: this.password,
         role: this.roleId,
       };
