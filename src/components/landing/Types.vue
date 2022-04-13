@@ -25,59 +25,70 @@
         :key="i"
       >
         <v-col class="pa-0 h-100" cols="12" md="6" :order="i % 2">
-          <v-img height="320" :src="type.image || notfound" eager></v-img>
+          <v-hover v-slot="{ isHovering, props }">
+            <v-img
+              v-bind="props"
+              height="280"
+              :class="isHovering ? 'elevation-6' : 'elevation-0'"
+              :src="type.image || notfound"
+              cover
+              eager
+            ></v-img>
+          </v-hover>
         </v-col>
         <v-col cols="10" sm="8" md="6" :order="issm ? 5 : 0">
-          <v-card>
-            <v-card-title class="text-h6">{{ type.name }}</v-card-title>
-            <v-card-subtitle class="d-block">
-              <h3 class="font-weight-regular">{{ type.description }}</h3>
-              <v-divider class="my-3"></v-divider>
-              <v-container class="details">
-                <v-row>
-                  <v-col>Total Facilities</v-col>
-                  <v-col>Total Rooms</v-col>
-                </v-row>
-                <v-row>
-                  <v-col>{{ type.facilities.length }}</v-col>
-                  <v-col>{{ type.total }}</v-col>
-                </v-row>
-              </v-container>
-            </v-card-subtitle>
-            <v-card-text class="py-2 text-high-emphasis">
-              <v-alert
-                border="start"
-                color="blue"
-                density="comfortable"
-                variant="contained-text"
-              >
-                <v-icon class="me-2">mdi-cash-multiple</v-icon>
-                Only for <b>Rp.{{ type.price }}</b>
-              </v-alert>
-            </v-card-text>
-            <v-card-actions>
-              <v-btn color="primary" variant="outlined" @click="toggle(i)">
-                <v-icon class="me-2">mdi-lamp</v-icon> Room Facilities
-              </v-btn>
-              <v-btn color="primary" @click="selectType(type)">
-                <v-icon class="me-2">mdi-calendar-plus</v-icon> Reserve Now!
-              </v-btn>
-            </v-card-actions>
-            <v-expand-transition>
-              <v-container
-                v-show="reveal[i]"
-                class="text-body-2 text-medium-emphasis"
-              >
-                <v-divider class="mb-3"></v-divider>
-                <v-row v-for="(facility, j) in type.facilities" :key="j">
-                  <v-col class="d-flex flex-column justify-center" cols="4">
-                    <span>{{ facility.name }}</span>
-                  </v-col>
-                  <v-col>{{ facility.notes }}</v-col>
-                </v-row>
-              </v-container>
-            </v-expand-transition>
-          </v-card>
+          <v-hover v-slot="{ isHovering, props }">
+            <v-card v-bind="props" :elevation="isHovering ? 6 : 1">
+              <v-card-title class="text-h6">{{ type.name }}</v-card-title>
+              <v-card-subtitle class="d-block">
+                <h3 class="font-weight-regular">{{ type.description }}</h3>
+                <v-divider class="my-3"></v-divider>
+                <v-container class="details">
+                  <v-row>
+                    <v-col>Total Facilities</v-col>
+                    <v-col>Total Rooms</v-col>
+                  </v-row>
+                  <v-row>
+                    <v-col>{{ type.facilities.length }}</v-col>
+                    <v-col>{{ type.total }}</v-col>
+                  </v-row>
+                </v-container>
+              </v-card-subtitle>
+              <v-card-text class="py-2 text-high-emphasis">
+                <v-alert
+                  border="start"
+                  color="blue"
+                  density="comfortable"
+                  variant="contained-text"
+                >
+                  <v-icon class="me-2">mdi-cash-multiple</v-icon>
+                  Only for <b>Rp.{{ type.price }}</b>
+                </v-alert>
+              </v-card-text>
+              <v-card-actions>
+                <v-btn color="primary" variant="outlined" @click="toggle(i)">
+                  <v-icon class="me-2">mdi-lamp</v-icon> Room Facilities
+                </v-btn>
+                <v-btn color="primary" @click="selectType(type)">
+                  <v-icon class="me-2">mdi-calendar-plus</v-icon> Reserve Now!
+                </v-btn>
+              </v-card-actions>
+              <v-expand-transition>
+                <v-container
+                  v-show="reveal[i]"
+                  class="text-body-2 text-medium-emphasis"
+                >
+                  <v-divider class="mb-3"></v-divider>
+                  <v-row v-for="(facility, j) in type.facilities" :key="j">
+                    <v-col class="d-flex flex-column justify-center" cols="4">
+                      <span>{{ facility.name }}</span>
+                    </v-col>
+                    <v-col>{{ facility.notes }}</v-col>
+                  </v-row>
+                </v-container>
+              </v-expand-transition>
+            </v-card>
+          </v-hover>
         </v-col>
       </v-row>
     </v-container>
