@@ -1,4 +1,6 @@
 # Hotel
+### This branch is made for static use only, every API calls has been removed and replaced with static data instead.
+#### Most features, including routing, will not work as expected.
 
 ## Project setup
 ```
