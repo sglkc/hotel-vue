@@ -68,49 +68,59 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "RoomTable",
   data() {
     return {
-      rooms: false,
+      rooms: [
+        {
+          type_name: "Regular",
+          price: 160000,
+          id: 1,
+          name: "x30-04",
+          room_type: 1,
+          capacity: 2,
+          created_at: "2022-03-09T22:23:35.000Z",
+        },
+        {
+          type_name: "Regular",
+          price: 160000,
+          id: 2,
+          name: "x30-05",
+          room_type: 1,
+          capacity: 1,
+          created_at: "2022-04-12T07:06:55.000Z",
+        },
+        {
+          type_name: "Regular",
+          price: 160000,
+          id: 3,
+          name: "x30-06",
+          room_type: 1,
+          capacity: 1,
+          created_at: "2022-04-12T07:07:13.000Z",
+        },
+        {
+          type_name: "Exclusive",
+          price: 500000,
+          id: 4,
+          name: "x35-01",
+          room_type: 2,
+          capacity: 5,
+          created_at: "2022-04-12T07:07:37.000Z",
+        },
+      ],
       selected: false,
     };
   },
   methods: {
-    getRooms() {
-      axios
-        .get(import.meta.env.VITE_API + "/services/rooms", {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then((res) => {
-          this.rooms = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
+    getRooms() {},
     updateRoom(room) {
       this.selected = room.id;
       this.emitter.emit("updateRoom", room);
     },
     deleteRoom(id) {
-      axios
-        .delete(import.meta.env.VITE_API + "/services/rooms/" + id, {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then(() => {
-          if (this.selected === id) this.emitter.emit("updateRoom", false);
-          this.getRooms();
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
+      if (this.selected === id) this.emitter.emit("updateRoom", false);
     },
   },
   created() {

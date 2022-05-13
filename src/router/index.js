@@ -4,26 +4,8 @@ import store from "../store";
 
 function decode() {
   if (!store.state.JWT_TOKEN) return false;
-
-  try {
-    const token = store.state.JWT_TOKEN;
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = JSON.parse(
-      decodeURIComponent(
-        atob(base64)
-          .split("")
-          .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
-          .join("")
-      )
-    );
-    const exp = parseInt(jsonPayload.exp + "000");
-
-    if (exp < Date.now()) return false;
-    else return jsonPayload;
-  } catch {
-    return false;
-  }
+  if (!store.state.USER) return false;
+  return store.state.USER;
 }
 
 function admin(to, from, next) {

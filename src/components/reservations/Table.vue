@@ -46,13 +46,24 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "ReservationsTable",
   data() {
     return {
-      entries: [],
+      entries: [
+        {
+          user_name: "Dummy",
+          email: "dummy@dum.my",
+          phone: "12345678",
+          room_name: "x30-04",
+          id: 1,
+          room_id: 1,
+          user_id: 1,
+          checkin: "2022-04-10T17:00:00.000Z",
+          checkout: "2022-04-12T17:00:00.000Z",
+          created_at: "2022-04-11T04:46:12.000Z",
+        },
+      ],
       filter: null,
       date: null,
     };
@@ -77,20 +88,7 @@ export default {
       this.filter = filter.filter;
       this.date = filter.date;
     },
-    getData() {
-      axios
-        .get(import.meta.env.VITE_API + "/services/reservations", {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then((res) => {
-          this.entries = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
+    getData() {},
   },
   created() {
     this.emitter.on("filterTable", this.filterTable);

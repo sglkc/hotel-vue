@@ -1,9 +1,16 @@
 <template>
   <div v-if="loggedIn === null"></div>
   <v-container v-else-if="loggedIn" class="h-100">
+    <v-row class="mt-auto mb-0">
+      <v-col class="mb-0 pb-0">
+        <v-alert type="success">Successfully logged in</v-alert>
+      </v-col>
+    </v-row>
     <v-row class="mt-auto mb-6">
       <v-col>
-        <v-alert type="success">Successfully logged in</v-alert>
+        <v-alert type="error" prominent>
+          <h1>Staff CRUD Operations currently unavailable</h1>
+        </v-alert>
       </v-col>
     </v-row>
     <v-row>
@@ -41,7 +48,6 @@
 
 <script>
 import AuthForm from "@/components/AuthForm.vue";
-import axios from "axios";
 
 export default {
   name: "StaffView",
@@ -60,24 +66,13 @@ export default {
       location.reload();
     },
     verifyStaff() {
-      axios
-        .post(import.meta.env.VITE_API + "/auth/verify", {
-          token: this.store.state.JWT_TOKEN,
-        })
-        .then((res) => {
-          const role = res.data.result.role_name;
-          if (role !== "admin" && role !== "receptionist") {
-            this.message = "Your account is unauthorized";
-            this.loggedIn = false;
-          } else {
-            this.loggedIn = true;
-          }
-        })
-        .catch(() => {
-          this.message = "Failed to verify token";
-          this.loggedIn = false;
-          this.store.commit("setUser", false);
-        });
+      const role = this.store.state.USER.role_name;
+      if (role !== "admin" && role !== "receptionist") {
+        this.message = "Your account is unauthorized";
+        this.loggedIn = false;
+      } else {
+        this.loggedIn = true;
+      }
     },
   },
   async created() {

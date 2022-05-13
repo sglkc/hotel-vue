@@ -137,8 +137,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "LoginForm",
   props: {
@@ -162,7 +160,20 @@ export default {
       },
       fail: false,
       registerForm: false,
-      roles: false,
+      roles: [
+        {
+          id: 1,
+          name: "admin",
+        },
+        {
+          id: 2,
+          name: "receptionist",
+        },
+        {
+          id: 3,
+          name: "user",
+        },
+      ],
     };
   },
   methods: {
@@ -171,54 +182,28 @@ export default {
       if (!validation.valid) return (this.fail = "Please complete the form");
       if (!this.roleId) return (this.fail = "Select a role for the account");
 
-      const body = {
-        full_name: this.full_name,
-        email: this.email,
-        phone: this.phone,
-        password: this.password,
-        role: this.roleId,
-      };
-
-      axios
-        .post(import.meta.env.VITE_API + "/auth/register", body)
-        .then(() => {
-          this.fail = false;
-          this.registerForm = false;
-        })
-        .catch((err) => {
-          this.fail = err.response?.data.error ?? err;
-        });
+      this.registerForm = false;
     },
     async login() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return (this.fail = "Please complete the form");
 
-      const body = {
-        email: this.email,
-        password: this.password,
-      };
+      if (this.email !== "dummy@dum.my" && this.password !== "password") {
+        return (this.fail =
+          'Try the email: "dummy@dum.my" and password: "password"');
+      }
 
-      axios
-        .post(import.meta.env.VITE_API + "/auth/login", body)
-        .then((res) => {
-          this.store.commit("setJWT", res.data.result.token);
-          this.store.commit("setUser", res.data.result.user);
-          this.emitter.emit("refreshView", true);
-        })
-        .catch((err) => {
-          this.fail = err.response?.data.error ?? err;
-        });
-    },
-  },
-  created() {
-    axios
-      .get(import.meta.env.VITE_API + "/auth/roles")
-      .then((res) => {
-        this.roles = res.data.result;
-      })
-      .catch((err) => {
-        console.error(err.response?.data.error ?? err);
+      this.store.commit("setJWT", "TESTTOKEN");
+      this.store.commit("setUser", {
+        role_name: "admin",
+        id: 1,
+        full_name: "Dummy",
+        email: "dummy@dum.my",
+        phone: "12345678",
+        role: 3,
       });
+      this.emitter.emit("refreshView", true);
+    },
   },
 };
 </script>

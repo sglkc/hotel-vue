@@ -46,8 +46,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "FacilityForm",
   data() {
@@ -62,25 +60,6 @@ export default {
     async submit() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return;
-
-      const body = {
-        name: this.name,
-        notes: this.notes,
-        image: this.image,
-      };
-
-      axios
-        .post(import.meta.env.VITE_API + "/services/facilities", body, {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then(() => {
-          this.emitter.emit("getFacilities");
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
     },
   },
 };

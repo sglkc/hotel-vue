@@ -7,6 +7,7 @@ const path = require("path");
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: "/hotel-vue/",
   plugins: [
     eslintPlugin({ cache: false }),
     vue(),

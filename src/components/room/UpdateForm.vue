@@ -61,8 +61,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "RoomUpdateForm",
   props: {
@@ -83,27 +81,6 @@ export default {
     async submit() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return;
-
-      axios
-        .put(
-          import.meta.env.VITE_API + "/services/rooms/" + this.room.id,
-          {
-            name: this.name,
-            capacity: this.capacity,
-          },
-          {
-            headers: {
-              Authorization: "bearer " + this.store.state.JWT_TOKEN,
-            },
-          }
-        )
-        .then(() => {
-          this.emitter.emit("getRooms");
-          this.cancel();
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
     },
     cancel() {
       this.emitter.emit("updateRoom", false);

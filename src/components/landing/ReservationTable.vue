@@ -110,7 +110,6 @@
 </style>
 
 <script>
-import axios from "axios";
 import Receipt from "@/components/Receipt.vue";
 
 export default {
@@ -121,7 +120,19 @@ export default {
   data() {
     return {
       user: this.store.state.USER,
-      reservations: [],
+      reservations: [
+        {
+          room_name: "x30-04",
+          room_type: "Regular",
+          price: 160000,
+          id: 1,
+          room_id: 1,
+          user_id: 1,
+          checkin: "2022-04-10T17:00:00.000Z",
+          checkout: "2022-04-12T17:00:00.000Z",
+          created_at: "2022-04-11T04:46:12.000Z",
+        },
+      ],
       receipt: false,
     };
   },
@@ -129,38 +140,8 @@ export default {
     toggleForm() {
       this.emitter.emit("toggleForm", true);
     },
-    getReservations() {
-      axios
-        .get(
-          import.meta.env.VITE_API +
-            `/services/users/${this.user.id}/reservations`,
-          {
-            headers: {
-              Authorization: "bearer " + this.store.state.JWT_TOKEN,
-            },
-          }
-        )
-        .then((res) => {
-          this.reservations = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
-    cancel(id) {
-      axios
-        .delete(import.meta.env.VITE_API + "/services/reservations/" + id, {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then(() => {
-          this.getReservations();
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
+    getReservations() {},
+    cancel(/* id */) {},
   },
   created() {
     this.emitter.on("toggleForm", this.getReservations);

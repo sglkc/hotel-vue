@@ -66,15 +66,44 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "RoomForm",
   data() {
     return {
       name: null,
       roomType: null,
-      roomTypes: false,
+      roomTypes: [
+        {
+          id: 1,
+          name: "Regular",
+          description:
+            "Just wanted to have a leisure? This room is perfect for you and your wallet.",
+          image:
+            "https://cdn.pixabay.com/photo/2018/06/14/21/15/the-interior-of-the-3475656_960_720.jpg",
+          price: 160000,
+          total: 15,
+        },
+        {
+          id: 2,
+          name: "Exclusive",
+          description:
+            "Get more comfortable with a living room and a balcony with the city view.",
+          image:
+            "https://cdn.pixabay.com/photo/2016/03/28/09/34/bedroom-1285156_960_720.jpg",
+          price: 500000,
+          total: 10,
+        },
+        {
+          id: 3,
+          name: "Premium",
+          description:
+            "Feel like home, complete with a living room, a dining room, and a fully equipped kitchen.",
+          image:
+            "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q60",
+          price: 1290000,
+          total: 5,
+        },
+      ],
       notes: null,
       required: (v) => !!v || "Required",
     };
@@ -84,36 +113,7 @@ export default {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return;
       if (!this.roomType) return;
-
-      const body = {
-        name: this.name,
-        room_type: this.roomType,
-        notes: this.notes,
-      };
-
-      axios
-        .post(import.meta.env.VITE_API + "/services/room-facilities", body, {
-          headers: {
-            Authorization: "bearer " + this.store.state.JWT_TOKEN,
-          },
-        })
-        .then(() => {
-          this.emitter.emit("getRoomFacilities");
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
     },
-  },
-  async created() {
-    axios
-      .get(import.meta.env.VITE_API + "/services/room-types")
-      .then((res) => {
-        this.roomTypes = res.data.result;
-      })
-      .catch((err) => {
-        console.error(err.response?.data.error ?? err);
-      });
   },
 };
 </script>

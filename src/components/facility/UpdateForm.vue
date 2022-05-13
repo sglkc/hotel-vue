@@ -57,8 +57,6 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
   name: "FacilityUpdateForm",
   props: {
@@ -81,28 +79,6 @@ export default {
     async submit() {
       const validation = await this.$refs.form.validate();
       if (!validation.valid) return;
-
-      axios
-        .put(
-          import.meta.env.VITE_API + "/services/facilities/" + this.facility.id,
-          {
-            name: this.name,
-            notes: this.notes,
-            image: this.image,
-          },
-          {
-            headers: {
-              Authorization: "bearer " + this.store.state.JWT_TOKEN,
-            },
-          }
-        )
-        .then(() => {
-          this.emitter.emit("getFacilities");
-          this.cancel();
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
     },
     cancel() {
       this.emitter.emit("updateFacility", false);

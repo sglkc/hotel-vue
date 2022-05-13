@@ -106,7 +106,6 @@
 </style>
 
 <script>
-import axios from "axios";
 import notfound from "@/assets/notfound.png";
 
 export default {
@@ -114,7 +113,136 @@ export default {
   data() {
     return {
       notfound,
-      types: [],
+      types: [
+        {
+          id: 1,
+          name: "Regular",
+          description:
+            "Just wanted to have a leisure? This room is perfect for you and your wallet.",
+          image:
+            "https://cdn.pixabay.com/photo/2018/06/14/21/15/the-interior-of-the-3475656_960_720.jpg",
+          price: 160000,
+          total: 15,
+          facilities: [
+            {
+              id: 1,
+              room_type: 1,
+              name: "Double Bed",
+              notes: "Includes pillows and a blanket",
+            },
+            {
+              id: 2,
+              room_type: 1,
+              name: "Work Desk",
+              notes: "Includes a mirror and a table lamp",
+            },
+            {
+              id: 3,
+              room_type: 1,
+              name: "Air Conditioning",
+              notes: "Complete with remote control",
+            },
+            {
+              id: 4,
+              room_type: 1,
+              name: "Bathroom",
+              notes: "A compact bathroom for everyday use",
+            },
+          ],
+        },
+        {
+          id: 2,
+          name: "Exclusive",
+          description:
+            "Get more comfortable with a living room and a balcony with the city view.",
+          image:
+            "https://cdn.pixabay.com/photo/2016/03/28/09/34/bedroom-1285156_960_720.jpg",
+          price: 500000,
+          total: 10,
+          facilities: [
+            {
+              id: 5,
+              room_type: 2,
+              name: "Queen Bed",
+              notes:
+                "Includes pillows, a blanket, and a cupboard with bed lamp",
+            },
+            {
+              id: 6,
+              room_type: 2,
+              name: "Air Conditioning",
+              notes: "Complete with remote control",
+            },
+            {
+              id: 7,
+              room_type: 2,
+              name: "Living Room",
+              notes: "Includes a table, sofa, and a comfy rug",
+            },
+            {
+              id: 8,
+              room_type: 2,
+              name: "Balcony",
+              notes: "With city view to accompany you",
+            },
+            {
+              id: 9,
+              room_type: 2,
+              name: "Bathroom",
+              notes: "Features a bathtub and a shower",
+            },
+          ],
+        },
+        {
+          id: 3,
+          name: "Premium",
+          description:
+            "Feel like home, complete with a living room, a dining room, and a fully equipped kitchen.",
+          image:
+            "https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q60",
+          price: 1290000,
+          total: 5,
+          facilities: [
+            {
+              id: 10,
+              room_type: 3,
+              name: "King Bed",
+              notes:
+                "Includes pillows, a blanket, and a cupboard with bed lamp",
+            },
+            {
+              id: 11,
+              room_type: 3,
+              name: "Air Conditioning",
+              notes: "Complete with remote control",
+            },
+            {
+              id: 12,
+              room_type: 3,
+              name: "Living Room",
+              notes: "Includes a table, sofa, a TV, and a DVD player",
+            },
+            {
+              id: 13,
+              room_type: 3,
+              name: "Kitchen",
+              notes: "Free fresh vegetables daily and stainless silverwares",
+            },
+            {
+              id: 14,
+              room_type: 3,
+              name: "Dining Room",
+              notes: "Imported wooden table with comfortable chairs",
+            },
+            {
+              id: 15,
+              room_type: 3,
+              name: "Bathroom",
+              notes: "Spacious bathroom with a bathtub and a shower",
+            },
+          ],
+        },
+      ],
       reveal: [],
     };
   },
@@ -131,27 +259,6 @@ export default {
       this.emitter.emit("selectType", type);
       this.$router.push("#reservation");
     },
-  },
-  created() {
-    axios
-      .get(import.meta.env.VITE_API + "/services/room-types")
-      .then((res) => {
-        res.data.result.forEach((r) => {
-          axios
-            .get(
-              import.meta.env.VITE_API +
-                "/services/room-types/" +
-                r.id +
-                "/facilities"
-            )
-            .then((res) => {
-              r.facilities = res.data.result;
-              this.types.push(r);
-            })
-            .catch(console.error);
-        });
-      })
-      .catch(console.error);
   },
 };
 </script>

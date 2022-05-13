@@ -183,7 +183,6 @@
 </style>
 
 <script>
-import axios from "axios";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 
@@ -209,7 +208,19 @@ export default {
         checkout: null,
       },
       status: [],
-      reservations: [],
+      reservations: [
+        {
+          room_name: "x30-04",
+          room_type: "Regular",
+          price: 160000,
+          id: 1,
+          room_id: 1,
+          user_id: 1,
+          checkin: "2022-04-10T17:00:00.000Z",
+          checkout: "2022-04-12T17:00:00.000Z",
+          created_at: "2022-04-11T04:46:12.000Z",
+        },
+      ],
     };
   },
   computed: {
@@ -227,33 +238,41 @@ export default {
       this.$router.push("#types");
     },
     getRooms(id) {
-      axios
-        .get(import.meta.env.VITE_API + `/services/room-types/${id}/available`)
-        .then((res) => {
-          this.rooms = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
-    },
-    getReservations() {
-      axios
-        .get(
-          import.meta.env.VITE_API +
-            `/services/users/${this.user.id}/reservations`,
-          {
-            headers: {
-              Authorization: "bearer " + this.store.state.JWT_TOKEN,
+      switch (id) {
+        case 1:
+          this.rooms = [
+            {
+              id: 2,
+              name: "x30-05",
+              room_type: 1,
+              capacity: 1,
+              created_at: "2022-04-12T07:06:55.000Z",
             },
-          }
-        )
-        .then((res) => {
-          this.reservations = res.data.result;
-        })
-        .catch((err) => {
-          console.error(err.response?.data.error ?? err);
-        });
+            {
+              id: 3,
+              name: "x30-06",
+              room_type: 1,
+              capacity: 1,
+              created_at: "2022-04-12T07:07:13.000Z",
+            },
+          ];
+          break;
+        case 2:
+          this.rooms = [
+            {
+              id: 4,
+              name: "x35-01",
+              room_type: 2,
+              capacity: 5,
+              created_at: "2022-04-12T07:07:37.000Z",
+            },
+          ];
+          break;
+        default:
+          this.rooms = [];
+      }
     },
+    getReservations() {},
     selectType(type) {
       this.type = type;
       this.room = null;
@@ -281,40 +300,6 @@ export default {
       }
       if (!this.selected_rooms.length) return;
       if (!validation.valid) return;
-
-      axios
-        .post(
-          import.meta.env.VITE_API + "/services/reservations",
-          {
-            room_type: this.type.id,
-            room_id: this.selected_rooms,
-            user_id: this.user.id,
-            phone: this.phone,
-            checkin: this.formatDate(this.checkin),
-            checkout: this.formatDate(this.checkout),
-          },
-          {
-            headers: {
-              Authorization: "bearer " + this.store.state.JWT_TOKEN,
-            },
-          }
-        )
-        .then(() => {
-          this.getRooms();
-          this.getReservations();
-          this.status = [
-            "success",
-            "mdi-bookmark-check",
-            "Success reserving room!",
-          ];
-        })
-        .catch((err) => {
-          this.status = [
-            "error",
-            "mdi-close-circle",
-            err.response?.data.error ?? err.toString(),
-          ];
-        });
     },
     toggleForm() {
       this.emitter.emit("toggleForm", false);

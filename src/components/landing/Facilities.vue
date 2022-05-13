@@ -88,7 +88,6 @@
 </style>
 
 <script>
-import axios from "axios";
 import notfound from "@/assets/notfound.png";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import "vue3-carousel/dist/carousel.css";
@@ -104,7 +103,45 @@ export default {
   data() {
     return {
       notfound,
-      facilities: null,
+      facilities: [
+        {
+          id: 1,
+          name: "Restroom",
+          notes: "Hygienic restroom can be used by the public.",
+          image:
+            "https://images.unsplash.com/photo-1569597967185-cd6120712154?ixlib=rb-1.2.1&auto=format&fit=crop&w=774&q=80",
+        },
+        {
+          id: 2,
+          name: "Wi-Fi Network",
+          notes: "Free, with 5Mbps speed. Reachable across the whole hotel.",
+          image:
+            "https://images.unsplash.com/photo-1516044734145-07ca8eef8731?ixlib=rb-1.2.1&auto=format&fit=crop&w=1173&q=60",
+        },
+        {
+          id: 3,
+          name: "Restaurant",
+          notes:
+            "Healthy and high-quality food brought to you by professional chefs.",
+          image:
+            "https://images.unsplash.com/photo-1552566626-52f8b828add9?ixlib=rb-1.2.1&auto=format&fit=crop&w=1170&q=60",
+        },
+        {
+          id: 4,
+          name: "Cleaning Service",
+          notes:
+            "We clean every single place everyday, leaving the hotel without dirt.",
+          image:
+            "https://images.unsplash.com/photo-1603712725038-e9334ae8f39f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1171&q=60",
+        },
+        {
+          id: 5,
+          name: "Swimming Pool",
+          notes: "Refresh your days in the pool.",
+          image:
+            "https://images.unsplash.com/photo-1512470289403-f3639ce9ae09?ixlib=rb-1.2.1&auto=format&fit=crop&w=1117&q=60",
+        },
+      ],
       description: `
       From the minute you step through the doors, you are greeted with a warm
       welcome and a smile. The staff is very friendly and knowledgeable about
@@ -112,14 +149,6 @@ export default {
       very short walk to the beach and restaurants.
       `,
     };
-  },
-  created() {
-    axios
-      .get(import.meta.env.VITE_API + "/services/facilities")
-      .then((res) => {
-        this.facilities = res.data.result;
-      })
-      .catch(console.error);
   },
 };
 </script>
